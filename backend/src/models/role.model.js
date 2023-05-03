@@ -2,7 +2,8 @@
 // Importa el modulo 'mongoose' para crear la conexion a la base de datos
 const mongoose = require("mongoose");
 
-const ROLES = ["user", "admin"];
+// agregamos rol de reloj_control para que el tome la asistencia de los brigadistas.
+const ROLES = ["user", "admin", "reloj_control"];
 
 // Crea el esquema de la coleccion 'roles'
 const roleSchema = new mongoose.Schema({
