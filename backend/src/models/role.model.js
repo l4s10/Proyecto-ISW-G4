@@ -8,9 +8,9 @@ const ROLES = ["user", "admin", "reloj_control", "jefe_cuadrilla"];
 // Crea el esquema de la coleccion 'roles'
 const roleSchema = new mongoose.Schema({
   name: {
-    type: String,
-    enum: ROLES,
-    required: true,
+  type: String,
+  enum: ROLES,
+  required: true,
   },
 });
 

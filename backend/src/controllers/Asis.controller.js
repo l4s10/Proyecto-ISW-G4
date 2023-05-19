@@ -1,5 +1,5 @@
 // Importa el modelo de la asistencia
-const Asistencia = require('../models/asis.model.js');
+const Asistencia = require("../models/asis.model.js");
 
 // Controlador para obtener todas las asistencias
 const obtenerAsistencias = async (req, res) => {
@@ -18,7 +18,7 @@ try {
     if (asistencia) {
     res.json(asistencia);
     } else {
-    res.status(404).json({ message: 'Asistencia no encontrada' });
+    res.status(404).json({ message: "Asistencia no encontrada" });
     }
 } catch (error) {
     res.status(500).json({ message: error.message });
@@ -56,7 +56,7 @@ try {
     const asistenciaActualizada = await asistencia.save();
     res.json(asistenciaActualizada);
     } else {
-    res.status(404).json({ message: 'Asistencia no encontrada' });
+    res.status(404).json({ message: "Asistencia no encontrada" });
     }
 } catch (error) {
     res.status(400).json({ message: error.message });
@@ -70,9 +70,9 @@ try {
 
     if (asistencia) {
     await asistencia.remove();
-    res.json({ message: 'Asistencia eliminada correctamente' });
+    res.json({ message: "Asistencia eliminada correctamente" });
     } else {
-    res.status(404).json({ message: 'Asistencia no encontrada' });
+    res.status(404).json({ message: "Asistencia no encontrada" });
     }
 } catch (error) {
     res.status(500).json({ message: error.message });
@@ -84,5 +84,5 @@ obtenerAsistencias,
 obtenerAsistenciaPorId,
 crearAsistencia,
 actualizarAsistenciaPorId,
-eliminarAsistenciaPorId
+eliminarAsistenciaPorId,
 };
