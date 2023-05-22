@@ -5,6 +5,7 @@ const {
     getAttendances,
     updateAttendance,
     deleteAttendance,
+    obtenerAsistenciasPorUsuario,
 } = require("../controllers/attendance.controller");
 
 // Ruta para crear una nueva asistencia
@@ -18,5 +19,8 @@ router.put("/:id", updateAttendance);
 
 // Ruta para eliminar una asistencia existente
 router.delete("/:id", deleteAttendance);
+
+// Ruta para obtener todas las asistencias de un usuario por su ID
+router.get("/user/:userId", obtenerAsistenciasPorUsuario);
 
 module.exports = router;

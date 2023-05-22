@@ -10,6 +10,8 @@ const authRoutes = require("./auth.routes.js");
 const authMiddleware = require("../middlewares/authe.middleware.js");
 // Importamos asistencias
 const asistenciaRoutes = require("./attendance.routes.js");
+// Importamos rutas reportes
+const reportesRoutes = require("./reportes.routes.js");
 // Crea una instancia del enrutador
 const router = express.Router();
 
@@ -19,5 +21,7 @@ router.use("/users", authMiddleware.verifyToken, userRoutes);
 router.use("/auth", authRoutes);
 // Definimos las rutas de asistencia
 router.use("/asistencias", asistenciaRoutes);
+// Definimos las rutas de reportes
+router.use("/reportes", reportesRoutes);
 // Exporta el enrutador
 module.exports = router;

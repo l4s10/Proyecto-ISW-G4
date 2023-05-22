@@ -10,13 +10,12 @@ const Attendance = require("../models/attendance.model");
  */
 const createAttendance = async (req, res) => {
     try {
-        const { brigadista, date, attended } = req.body;
-
-        // Creamos una nueva instancia de Attendance con los datos recibidos en el body
+        const { brigadista, date, markType } = req.body;
+         // Creamos una nueva instancia de Attendance con los datos recibidos en el body
         const attendance = new Attendance({
-        brigadista,
-        date,
-        attended,
+            brigadista,
+            date,
+            markType,
         });
 
         // Guardamos la nueva asistencia en la base de datos
@@ -62,13 +61,13 @@ const getAttendances = async (req, res) => {
 const updateAttendance = async (req, res) => {
     try {
         const { id } = req.params;
-        const { attended } = req.body;
+        const { markType } = req.body;
 
         // Buscamos la asistencia por su id y la actualizamos con los nuevos datos
         const attendance = await Attendance.findByIdAndUpdate(
-        id,
-        { attended },
-        { new: true },
+            id,
+            { markType },
+            { new: true },
         );
 
         // Si la asistencia no existe, enviamos una respuesta con un código de error
@@ -111,10 +110,27 @@ const deleteAttendance = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+/**
+ * Obtener todas las asistencias de un usuario por su ID de objeto
+ * @param {object} req - Objeto de solicitud
+ * @param {object} res - Objeto de respuesta
+ * @returns {Promise<void>}
+ */
+const obtenerAsistenciasPorUsuario = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        // Buscar las asistencias del usuario
+        const asistencias = await Attendance.find({ brigadista: userId });
+        res.json(asistencias);
+    } catch (error) {
+        res.status(500).json({ mensaje: "Error al obtener las asistencias del usuario" });
+    }
+};
 module.exports = {
     Attendance,
     createAttendance,
     getAttendances,
     updateAttendance,
     deleteAttendance,
+    obtenerAsistenciasPorUsuario,
 };
