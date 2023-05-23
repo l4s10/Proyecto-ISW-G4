@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const reportesController = require("../controllers/reportes.Controller");
+const reportesController = require("../controllers/reportes.controller");
 
 // Ruta para obtener todos los reportes
 router.get("/", reportesController.obtenerReportes);
