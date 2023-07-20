@@ -25,7 +25,7 @@ router.use("/users", authMiddleware.verifyToken, userRoutes);
 // Define las rutas para la autenticación /api/auth
 router.use("/auth", authRoutes);
 // Definimos las rutas de asistencia (solo entra admin y reloj_control)
-router.use("/asistencias", authMiddleware.verifyToken, asistenciaRoutes);
+router.use("/asistencias", asistenciaRoutes);
 // Definimos las rutas de reportes
 router.use("/reportes", authMiddleware.verifyToken, modifiedMiddleware.isAdminOrRelojControl, reportesRoutes);
 // Definimos las rutas de squad

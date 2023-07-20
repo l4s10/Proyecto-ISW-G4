@@ -14,7 +14,7 @@ const roleMiddleware = require("../middlewares/autho.middleware");
 router.post("/", createAttendance);
 
 // Ruta para obtener todas las asistencias
-router.get("/", roleMiddleware.isUser, getAttendances);
+router.get("/", getAttendances);
 
 // Ruta para actualizar una asistencia existente (SOLO ADMIN Y RELOJ_CONTROL)
 router.put("/:id", roleMiddleware.isAdminOrRelojControl, updateAttendance);

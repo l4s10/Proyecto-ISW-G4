@@ -16,11 +16,15 @@ const Squad = require("../models/squad.model");
  */
 async function getAllSquads(req, res, next) {
   try {
-    const squads = await Squad.find().populate("squadLeader", "name").populate("brigadistas", "name");
+    const squads = await Squad.find()
+      .populate("squadLeader", "name")
+      .populate("brigadistas", "name")
+      .exec();
     res.json(squads);
   } catch (error) {
-    res.status(500).json({ error: "Error interno del servidor." });
-  }
+      console.log(error);
+      res.status(500).json({ error: "Error interno del servidor." });
+    }
 }
 
 /**
