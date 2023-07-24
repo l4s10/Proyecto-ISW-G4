@@ -17,6 +17,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import CalendarAttendance from "@/components/CalendarAttendance";
 
 export default function Page() {
     const [asistencias, setAsistencias] = useState([])
@@ -79,6 +80,9 @@ export default function Page() {
                 </Card>
             </Grid>
             </Grid>
+        </div>
+        <div>
+            <CalendarAttendance></CalendarAttendance>
         </div>
         </>
     );
