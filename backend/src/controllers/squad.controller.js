@@ -16,11 +16,15 @@ const Squad = require("../models/squad.model");
  */
 async function getAllSquads(req, res, next) {
   try {
-    const squads = await Squad.find().populate("squadLeader", "name").populate("brigadistas", "name");
-    res.json(squads);
+    const squads = await Squad.find()
+      .populate("squadLeader", "name")
+      .populate("brigadistas", "name")
+      .exec();
+      res.status(200).json({ success: true, squads });
   } catch (error) {
-    res.status(500).json({ error: "Error interno del servidor." });
-  }
+      console.log(error);
+      res.status(500).json({ error: "Error interno del servidor." });
+    }
 }
 
 /**
@@ -32,8 +36,15 @@ async function getAllSquads(req, res, next) {
 async function createSquad(req, res, next) {
   try {
     const { name, squadLeader, brigadistas } = req.body;
-    const squad = await Squad.create({ name, squadLeader, brigadistas });
-    res.status(201).json(squad);
+    const squad = new Squad({
+        name,
+        squadLeader,
+        brigadistas,
+    });
+    // const squad = await Squad.create({ name, squadLeader, brigadistas });
+    await squad.save();
+    // Enviamos una respuesta exitosa al cliente
+    res.status(201).json({ success: true, squad });
   } catch (error) {
     res.status(500).json({ error: "Error interno del servidor." });
   }
@@ -95,7 +106,7 @@ async function deleteSquad(req, res, next) {
     if (!squad) {
       return res.status(404).json({ error: "Cuadrilla no encontrada." });
     }
-    res.sendStatus(204);
+    res.json(squad);
   } catch (error) {
     res.status(500).json({ error: "Error interno del servidor." });
   }

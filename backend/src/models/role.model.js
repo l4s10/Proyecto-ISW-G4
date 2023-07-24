@@ -3,7 +3,7 @@
 const mongoose = require("mongoose");
 
 // agregamos rol de reloj_control para que el tome la asistencia de los brigadistas.
-const ROLES = ["user", "admin", "reloj_control", "jefe_cuadrilla"];
+const ROLES = ["user", "admin", "reloj_control", "jefe_cuadrilla", "brigadista"];
 
 // Crea el esquema de la coleccion 'roles'
 const roleSchema = new mongoose.Schema({
