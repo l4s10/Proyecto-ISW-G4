@@ -6,6 +6,8 @@ import CardHeader from "@mui/material/CardHeader";
 import Grid from "@mui/material/Grid";
 import Navbar from "@/components/Navbar";
 
+import TablaReportes from "@/components/TablaReportes";
+
 export default function Page() {
     return (
         <>
@@ -40,6 +42,10 @@ export default function Page() {
                 </Card>
             </Grid>
             </Grid>
+        </div>
+
+        <div>
+            <TablaReportes></TablaReportes>
         </div>
         </>
     );
