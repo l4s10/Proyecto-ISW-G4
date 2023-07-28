@@ -45,7 +45,7 @@ export default function Page() {
                     Aquí puedes registrar una nueva asistencia.
                     </Typography>
                     <Button variant="contained" color="primary">
-                        <Link href='asistencias/create'>Registrar Nueva Asistencia</Link>
+                        <Link href='asistencias/registrar'>Registrar Nueva Asistencia</Link>
                     </Button>
                 </CardContent>
                 </Card>

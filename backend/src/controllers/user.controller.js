@@ -13,13 +13,17 @@ const { handleError } = require("../utils/errorHandler");
 async function getUsers(req, res) {
   try {
     const usuarios = await UserService.getUsers();
-    usuarios.length === 0
-      ? respondSuccess(req, res, 204)
-      : respondSuccess(req, res, 200, usuarios);
+    if (usuarios.length === 0) {
+      respondSuccess(req, res, 204);
+    } else {
+      const responseData = { users: usuarios };
+      respondSuccess(req, res, 200, responseData);
+    }
   } catch (error) {
     respondError(req, res, 400, error.message);
   }
 }
+
 
 /**
  * @name createUser
