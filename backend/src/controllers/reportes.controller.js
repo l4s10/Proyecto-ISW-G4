@@ -8,8 +8,11 @@ const Reportes = require("../models/reportes.model");
  */
 exports.obtenerReportes = async (req, res) => {
   try {
-    const reportes = await Reportes.find();
-    res.json(reportes);
+    const reportes = await Reportes.find()
+      .populate("usuario", "name")
+      .exec();
+    // Enviamos las asistencias al cliente
+    res.status(200).json({ success: true, reportes });
   } catch (error) {
     res.status(500).json({ mensaje: "Error al obtener los reportes" });
   }

@@ -21,58 +21,17 @@ import CalendarAttendance from "@/components/CalendarAttendance";
 import AttendanceModal from "@/components/AttendanceModal"; // Importa el componente de modal
 
 export default function Page() {
-    const [asistencias, setAsistencias] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false); // Estado para controlar la apertura/cierre del modal
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [eventos, setEventos] = useState([]); // Define el estado 'eventos' para almacenar los eventos
-    
-    const handleOpenModal = (date) => {
-        setModalOpen(true);
-        setSelectedDate(date);
-    };
-    
-    const handleCloseModal = () => {
-        setModalOpen(false);
-    };
+    const [asistencias, setAsistencias] = useState([])
 
-    const handleSaveAttendance = (date, attendanceData) => {
-        // Lógica para guardar la asistencia en la fecha seleccionada
-        // Por ejemplo, podrías hacer una llamada a la API para guardar los datos de asistencia.
-        // Aquí puedes actualizar el estado "asistencias" con la nueva asistencia registrada.
-        const newAttendance = {
-        brigadista: attendanceData.brigadista,
-        markType: attendanceData.markType,
-        date: date,
-        };
-        setAsistencias((prevAsistencias) => [...prevAsistencias, newAttendance]);
-        
-        // Actualizar el estado 'eventos' para agregar la nueva asistencia al calendario
-        setEventos((prevEventos) => [...prevEventos, { title: 'Asistencia', date: date }]);
-    };
-
-    useEffect(() => {
-            const fetchData = async () => {
-    try {
-            const res = await api.get('/asistencias');
-            setAsistencias(res.data.attendances);
-    } catch (error) {
-        console.error('Error al obtener asistencias:', error);
+    const fetchData = async() => {
+        const res = await api.get('/asistencias')
+        console.log(res.data.attendances)
+        return res.data.attendances
     }
-    };
-    fetchData();
-    }, []);
-
-        useEffect(() => {
-            // Actualiza los eventos cada vez que cambie el estado 'asistencias'
-            setEventos(
-            asistencias.map((asistencia) => ({
-                title: 'Asistencia', // Título del evento
-                date: asistencia.date, // Fecha del evento
-            }))
-            );
-        }, [asistencias]);
-    
-        return (
+    useEffect (()=>{
+        fetchData().then(res => setAsistencias(res))
+    }, [])
+    return (
         <>
         <Navbar />
         <div>
@@ -111,7 +70,7 @@ export default function Page() {
                             key={asistencia._id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                            <TableCell align="right">{asistencia.brigadista}</TableCell>
+                            <TableCell align="right">{asistencia.brigadista.name}</TableCell>
                             <TableCell align="right">{asistencia.date}</TableCell>
                             <TableCell align="right">{asistencia.markType}</TableCell>
                             </TableRow>

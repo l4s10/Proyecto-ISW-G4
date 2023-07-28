@@ -1,3 +1,4 @@
+"use strict";
 const Attendance = require("../models/attendance.model");
 
 // Controlador para crear una nueva asistencia
@@ -40,7 +41,9 @@ const createAttendance = async (req, res) => {
 const getAttendances = async (req, res) => {
     try {
         // Obtenemos todas las asistencias de la base de datos
-        const attendances = await Attendance.find();
+        const attendances = await Attendance.find()
+            .populate("brigadista", "name")
+            .exec();
 
         // Enviamos las asistencias al cliente
         res.status(200).json({ success: true, attendances });
