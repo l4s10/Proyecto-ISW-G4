@@ -24,11 +24,11 @@ export default function Page() {
 
     const fetchData = async() => {
         const res = await api.get('/asistencias')
+        console.log(res.data.attendances)
         return res.data.attendances
     }
     useEffect (()=>{
         fetchData().then(res => setAsistencias(res))
-        console.log(asistencias)
     }, [])
     return (
         <>
@@ -68,7 +68,7 @@ export default function Page() {
                             key={asistencia._id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                            <TableCell align="right">{asistencia.brigadista}</TableCell>
+                            <TableCell align="right">{asistencia.brigadista.name}</TableCell>
                             <TableCell align="right">{asistencia.date}</TableCell>
                             <TableCell align="right">{asistencia.markType}</TableCell>
                             </TableRow>

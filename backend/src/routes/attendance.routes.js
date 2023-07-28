@@ -20,7 +20,7 @@ router.get("/", getAttendances);
 router.put("/:id", roleMiddleware.isAdminOrRelojControl, updateAttendance);
 
 // Ruta para eliminar una asistencia existente (SOLO ADMIN)
-router.delete("/:id", roleMiddleware.isAdmin, deleteAttendance);
+router.delete("/:id", deleteAttendance);
 
 // Ruta para obtener todas las asistencias de un usuario por su ID
 router.get("/user/:userId", roleMiddleware.isAdminOrRelojControl, obtenerAsistenciasPorUsuario);
