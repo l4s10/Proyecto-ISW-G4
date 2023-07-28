@@ -17,7 +17,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import Link from 'next/link';
 
 
 export default function Page() {
@@ -53,7 +53,9 @@ export default function Page() {
                     Aquí puedes registrar una nueva cuadrilla.
                     </Typography>
                     <Button variant="contained" color="primary">
-                    Registrar Nueva Cuadrilla
+                        <Link href='cuadrillas/registrar'>
+                        Registrar Nueva Cuadrilla
+                        </Link>
                     </Button>
                 </CardContent>
                 </Card>

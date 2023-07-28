@@ -16,6 +16,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Link from 'next/link';
 
 import CalendarAttendance from "@/components/CalendarAttendance";
 import AttendanceModal from "@/components/AttendanceModal"; // Importa el componente de modal
@@ -44,9 +45,8 @@ export default function Page() {
                     <Typography variant="body1">
                     Aquí puedes registrar una nueva asistencia.
                     </Typography>
-                    {/* Botón para abrir el modal */}
-                    <Button variant="contained" color="primary" onClick={() => handleOpenModal(null)}>
-                    Registrar Nueva Asistencia
+                    <Button variant="contained" color="primary">
+                        <Link href='asistencias/registrar'>Registrar Nueva Asistencia</Link>
                     </Button>
                 </CardContent>
                 </Card>
