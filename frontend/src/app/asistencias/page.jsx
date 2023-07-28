@@ -18,19 +18,61 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import CalendarAttendance from "@/components/CalendarAttendance";
+import AttendanceModal from "@/components/AttendanceModal"; // Importa el componente de modal
 
 export default function Page() {
-    const [asistencias, setAsistencias] = useState([])
+    const [asistencias, setAsistencias] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false); // Estado para controlar la apertura/cierre del modal
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [eventos, setEventos] = useState([]); // Define el estado 'eventos' para almacenar los eventos
+    
+    const handleOpenModal = (date) => {
+        setModalOpen(true);
+        setSelectedDate(date);
+    };
+    
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
 
-    const fetchData = async() => {
-        const res = await api.get('/asistencias')
-        return res.data.attendances
+    const handleSaveAttendance = (date, attendanceData) => {
+        // Lógica para guardar la asistencia en la fecha seleccionada
+        // Por ejemplo, podrías hacer una llamada a la API para guardar los datos de asistencia.
+        // Aquí puedes actualizar el estado "asistencias" con la nueva asistencia registrada.
+        const newAttendance = {
+        brigadista: attendanceData.brigadista,
+        markType: attendanceData.markType,
+        date: date,
+        };
+        setAsistencias((prevAsistencias) => [...prevAsistencias, newAttendance]);
+        
+        // Actualizar el estado 'eventos' para agregar la nueva asistencia al calendario
+        setEventos((prevEventos) => [...prevEventos, { title: 'Asistencia', date: date }]);
+    };
+
+    useEffect(() => {
+            const fetchData = async () => {
+    try {
+            const res = await api.get('/asistencias');
+            setAsistencias(res.data.attendances);
+    } catch (error) {
+        console.error('Error al obtener asistencias:', error);
     }
-    useEffect (()=>{
-        fetchData().then(res => setAsistencias(res))
-        console.log(asistencias)
-    }, [])
-    return (
+    };
+    fetchData();
+    }, []);
+
+        useEffect(() => {
+            // Actualiza los eventos cada vez que cambie el estado 'asistencias'
+            setEventos(
+            asistencias.map((asistencia) => ({
+                title: 'Asistencia', // Título del evento
+                date: asistencia.date, // Fecha del evento
+            }))
+            );
+        }, [asistencias]);
+    
+        return (
         <>
         <Navbar />
         <div>
@@ -43,7 +85,8 @@ export default function Page() {
                     <Typography variant="body1">
                     Aquí puedes registrar una nueva asistencia.
                     </Typography>
-                    <Button variant="contained" color="primary">
+                    {/* Botón para abrir el modal */}
+                    <Button variant="contained" color="primary" onClick={() => handleOpenModal(null)}>
                     Registrar Nueva Asistencia
                     </Button>
                 </CardContent>
@@ -82,9 +125,19 @@ export default function Page() {
             </Grid>
         </div>
         <div>
-            <CalendarAttendance></CalendarAttendance>
         </div>
-        </>
+        <div>
+        {/* Componente del calendario con los eventos y evento para agregar un nuevo evento */}
+        <CalendarAttendance eventos={eventos} onDateClick={(date) => handleOpenModal(date)} />
+        </div>
+            {/* Modal para registrar asistencia */}
+            <AttendanceModal 
+            isOpen={modalOpen}
+            onClose={handleCloseModal}
+            selectedDate={selectedDate}
+            onSaveAttendance={handleSaveAttendance} 
+        />
+    </>
     );
 }
 
