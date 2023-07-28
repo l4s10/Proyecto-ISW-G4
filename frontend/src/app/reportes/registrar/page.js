@@ -1,55 +1,50 @@
 'use client';
+
+
 import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import api from '@/api/rootAPI';
 import Link from 'next/link';
+import 'flatpickr/dist/themes/material_green.css';
+import Flatpickr from 'react-flatpickr';
+import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import Box from '@mui/system/Box';
-import styled from '@mui/system/styled';
+import styled from 'styled-components';
 
-const FormWrapper = styled(Box)({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100vh',
-  gap: '10px',
-  padding: '20px',
-});
+const FormContainer = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+`;
 
-const StyledTextField = styled(TextField)({
-  marginBottom: '10px',
-});
+const StyledFlatpickr = styled(Flatpickr)`
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0.7rem;
+  border: 1px solid #0000001f;
+  border-radius: 0.3rem;
+`;
 
-const AsistenciaForm = () => {
+const ReporteForm = () => {
   const [formData, setFormData] = useState({
     titulo: '',
     usuario: '',
-    fecha: '',
+    fecha: new Date(),
     descripcion: '',
   });
 
   const [users, setUsers] = useState([]);
-
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await api.post('/reportes', formData);
-      alert('Reporte registrado exitosamente.');
-    } catch (error) {
-      alert('Error al registrar el reporte.');
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -57,7 +52,6 @@ const AsistenciaForm = () => {
         const res = await api.get('/users');
         if (res.data && res.data.state === "Success" && Array.isArray(res.data.data.users)) {
           setUsers(res.data.data.users);
-          // Establecemos el usuario predeterminado
           if (res.data.data.users.length > 0) {
             setFormData((prevFormData) => ({
               ...prevFormData,
@@ -74,56 +68,94 @@ const AsistenciaForm = () => {
     fetchUsers();
   }, []);
 
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleDateChange = (date) => {
+    setFormData({
+      ...formData,
+      fecha: date[0],
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await api.post('/reportes', formData);
+      alert('Reporte registrado exitosamente.');
+    } catch (error) {
+      alert('Error al registrar el reporte.');
+      console.error(error);
+    }
+  };
+
   return (
-    <FormWrapper>
-      <Typography variant="h1">Registrar Reporte</Typography>
-      <form onSubmit={handleSubmit}>
-        <StyledTextField
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bgcolor="#f0f2f5"
+    >
+      <FormContainer component="form" onSubmit={handleSubmit} maxWidth="sm">
+        <Typography variant="h4" component="h1" gutterBottom>
+          Registrar Reporte
+        </Typography>
+        <TextField
           label="Título"
           name="titulo"
           value={formData.titulo}
           onChange={handleChange}
           fullWidth
+          margin="normal"
         />
-        <StyledTextField
-            select
-            label="Usuario"
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="usuario-label">Usuario</InputLabel>
+          <Select
+            labelId="usuario-label"
             name="usuario"
             value={formData.usuario}
             onChange={handleChange}
             fullWidth
-            >
+          >
             {users.map((user) => (
-                <MenuItem key={user._id} value={user._id}>
-                {user.name}
-                </MenuItem>
+              <MenuItem key={user._id} value={user._id}>
+                {user.name}  {/* Asegúrate de cambiar "name" al campo correspondiente en tu objeto de usuario */}
+              </MenuItem>
             ))}
-        </StyledTextField>
-        <StyledTextField
-          label="Fecha"
-          name="fecha"
-          type="date"
+          </Select>
+        </FormControl>
+        <StyledFlatpickr
+          data-enable-time
+          options={{
+            dateFormat: 'd-m-Y H:i',
+            locale: Spanish,
+          }}
           value={formData.fecha}
-          onChange={handleChange}
-          fullWidth
+          onChange={handleDateChange}
         />
-        <StyledTextField
+        <TextField
           label="Descripción"
           name="descripcion"
           value={formData.descripcion}
           onChange={handleChange}
           multiline
           fullWidth
+          margin="normal"
         />
-        <Button variant="contained" color="primary" type="submit">
+        <Button variant="contained" color="primary" type="submit" style={{ marginTop: '1rem' }}>
           Registrar Reporte
         </Button>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" style={{ marginTop: '1rem' }}>
           <Link href="/reportes">Volver</Link>
         </Button>
-      </form>
-    </FormWrapper>
+      </FormContainer>
+    </Box>
   );
 };
 
-export default AsistenciaForm;
+export default ReporteForm;

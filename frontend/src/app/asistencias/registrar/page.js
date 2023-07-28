@@ -1,75 +1,156 @@
 'use client';
-//IMPORTAMOS LIBRERIAS
-import React, { useState } from 'react';
+
+
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-//EQUIVALENTE A AXIOS
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import api from '@/api/rootAPI';
-//PARA MANEJO DE LAS RUTAS
 import Link from 'next/link';
+import 'flatpickr/dist/themes/material_green.css';
+import Flatpickr from 'react-flatpickr';
+import { Spanish } from 'flatpickr/dist/l10n/es.js';
+import Box from '@mui/system/Box';
+import styled from 'styled-components';
+
+const FormContainer = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+`;
+
+const StyledFlatpickr = styled(Flatpickr)`
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0.7rem;
+  border: 1px solid #0000001f;
+  border-radius: 0.3rem;
+`;
 
 const AsistenciaForm = () => {
-    //HOOKS
-    const [formData, setFormData] = useState({
-        brigadista: '',
-        date: '',
-        markType: '',
-    });
-    //EQUIVALENTE A UN LISTENER DE INPUT
-    const handleChange = (event) => {
-        setFormData({
-        ...formData,
-        [event.target.name]: event.target.value,
-        });
-    };
-    //ENVIAR LA ASISTENCIA
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            await api.post('/asistencias', formData);
-            alert('Asistencia registrada exitosamente.');
-            // Puedes redirigir a otra página aquí si lo deseas.
-        } catch (error) {
-        alert('Error al registrar la asistencia.');
-        console.error(error);
+  const [formData, setFormData] = useState({
+    brigadista: '',
+    date: new Date(),
+    markType: '',
+  });
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await api.get('/users');
+        if (res.data && res.data.state === "Success" && Array.isArray(res.data.data.users)) {
+          setUsers(res.data.data.users);
+          if (res.data.data.users.length > 0) {
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              brigadista: res.data.data.users[0]._id,
+            }));
+          }
+        } else {
+          console.error('Error fetching users: response data does not contain an array of users');
         }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     };
-    //RETORNA 'LA VISTA" -> FORMULARIO 😀
-    return (
-        <div>
-        <Typography variant="h1">Registrar Asistencia</Typography>
-        <form onSubmit={handleSubmit}>
-            <TextField
-            label="Brigadista"
+    fetchUsers();
+  }, []);
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleDateChange = (date) => {
+    setFormData({
+      ...formData,
+      date: date[0],
+    });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await api.post('/asistencias', formData);
+      alert('Asistencia registrada exitosamente.');
+    } catch (error) {
+      alert('Error al registrar la asistencia.');
+      console.error(error);
+    }
+  };
+
+  return (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bgcolor="#f0f2f5"
+    >
+      <FormContainer component="form" onSubmit={handleSubmit} maxWidth="sm">
+        <Typography variant="h4" component="h1" gutterBottom>
+          Registrar Asistencia
+        </Typography>
+        <FormControl fullWidth>
+          <InputLabel id="brigadista-label">Brigadista</InputLabel>
+          <Select
+            labelId="brigadista-label"
             name="brigadista"
             value={formData.brigadista}
             onChange={handleChange}
             fullWidth
-            />
-            <TextField
-            label="Fecha (Formato: AAAA-MM-DD)"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            fullWidth
-            />
-            <TextField
-            label="Tipo de Marca"
+          >
+            {users.map((user) => (
+              <MenuItem key={user._id} value={user._id}>
+                {user.name}  {/* Asegúrate de cambiar "name" al campo correspondiente en tu objeto de usuario */}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <StyledFlatpickr
+          data-enable-time
+          options={{
+            dateFormat: 'd-m-Y H:i',
+            locale: Spanish,
+          }}
+          value={formData.date}
+          onChange={handleDateChange}
+        />
+        <FormControl fullWidth>
+          <InputLabel id="mark-type-label">Tipo de Marca</InputLabel>
+          <Select
+            labelId="mark-type-label"
             name="markType"
             value={formData.markType}
             onChange={handleChange}
             fullWidth
-            />
-            <Button variant="contained" color="primary" type="submit">
-            Registrar Asistencia
-            </Button>
-            <Button variant='contained' color='secondary'>
-                <Link href='asistencias'>Volver</Link>
-            </Button>
-        </form>
-        </div>
-    );
+          >
+            <MenuItem value={"ENTRADA"}>ENTRADA</MenuItem>
+            <MenuItem value={"SALIDA"}>SALIDA</MenuItem>
+          </Select>
+        </FormControl>
+        <Button variant="contained" color="primary" type="submit">
+          Registrar Asistencia
+        </Button>
+        <Button variant="contained" color="secondary">
+          <Link href="/asistencias">Volver</Link>
+        </Button>
+      </FormContainer>
+    </Box>
+  );
 };
 
 export default AsistenciaForm;
