@@ -16,6 +16,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Link from 'next/link';
 
 import CalendarAttendance from "@/components/CalendarAttendance";
 
@@ -44,7 +45,7 @@ export default function Page() {
                     Aquí puedes registrar una nueva asistencia.
                     </Typography>
                     <Button variant="contained" color="primary">
-                    Registrar Nueva Asistencia
+                        <Link href='asistencias/create'>Registrar Nueva Asistencia</Link>
                     </Button>
                 </CardContent>
                 </Card>
