@@ -6,6 +6,22 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import api from '@/api/rootAPI';
 import Link from 'next/link';
+import Box from '@mui/system/Box';
+import styled from '@mui/system/styled';
+
+const FormWrapper = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+  gap: '10px',
+  padding: '20px',
+});
+
+const StyledTextField = styled(TextField)({
+  marginBottom: '10px',
+});
 
 const AsistenciaForm = () => {
   const [formData, setFormData] = useState({
@@ -59,17 +75,17 @@ const AsistenciaForm = () => {
   }, []);
 
   return (
-    <div>
+    <FormWrapper>
       <Typography variant="h1">Registrar Reporte</Typography>
       <form onSubmit={handleSubmit}>
-        <TextField
+        <StyledTextField
           label="Título"
           name="titulo"
           value={formData.titulo}
           onChange={handleChange}
           fullWidth
         />
-        <TextField
+        <StyledTextField
             select
             label="Usuario"
             name="usuario"
@@ -82,8 +98,8 @@ const AsistenciaForm = () => {
                 {user.name}
                 </MenuItem>
             ))}
-        </TextField>
-        <TextField
+        </StyledTextField>
+        <StyledTextField
           label="Fecha"
           name="fecha"
           type="date"
@@ -91,7 +107,7 @@ const AsistenciaForm = () => {
           onChange={handleChange}
           fullWidth
         />
-        <TextField
+        <StyledTextField
           label="Descripción"
           name="descripcion"
           value={formData.descripcion}
@@ -106,7 +122,7 @@ const AsistenciaForm = () => {
           <Link href="/reportes">Volver</Link>
         </Button>
       </form>
-    </div>
+    </FormWrapper>
   );
 };
 

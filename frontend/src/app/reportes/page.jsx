@@ -9,6 +9,8 @@ import CardHeader from "@mui/material/CardHeader";
 import Grid from "@mui/material/Grid";
 import Navbar from "@/components/Navbar";
 import TablaReportes from "@/components/TablaReportes";
+import Link from 'next/link';
+
 
 export default function Page() {
   const [reportes, setReportes] = useState([]);
@@ -43,7 +45,7 @@ export default function Page() {
                   Aquí puedes registrar un nuevo reporte.
                 </Typography>
                 <Button variant="contained" color="primary">
-                  Registrar Nuevo Reporte
+                  <Link href='/reportes/registrar'>Registrar nuevo reporte</Link>
                 </Button>
               </CardContent>
             </Card>
