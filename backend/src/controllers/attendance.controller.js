@@ -52,8 +52,6 @@ const getAttendances = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
-
-// Controlador para actualizar una asistencia existente
 /**
  * Actualiza una asistencia existente en la base de datos con los datos proporcionados en el body.
  *
@@ -64,12 +62,12 @@ const getAttendances = async (req, res) => {
 const updateAttendance = async (req, res) => {
     try {
         const { id } = req.params;
-        const { markType } = req.body;
+        const { brigadista, date, markType } = req.body;
 
         // Buscamos la asistencia por su id y la actualizamos con los nuevos datos
         const attendance = await Attendance.findByIdAndUpdate(
             id,
-            { markType },
+            { brigadista, date, markType },
             { new: true },
         );
 

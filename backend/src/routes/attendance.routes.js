@@ -8,7 +8,7 @@ const {
     obtenerAsistenciasPorUsuario,
 } = require("../controllers/attendance.controller");
 
-const roleMiddleware = require("../middlewares/autho.middleware");
+// const roleMiddleware = require("../middlewares/autho.middleware");
 
 // Ruta para crear una nueva asistencia
 router.post("/", createAttendance);
@@ -17,7 +17,7 @@ router.post("/", createAttendance);
 router.get("/", getAttendances);
 
 // Ruta para actualizar una asistencia existente (SOLO ADMIN Y RELOJ_CONTROL)
-router.put("/:id", roleMiddleware.isAdminOrRelojControl, updateAttendance);
+router.put("/:id", updateAttendance);
 
 // Ruta para eliminar una asistencia existente (SOLO ADMIN)
 router.delete("/:id", deleteAttendance);
