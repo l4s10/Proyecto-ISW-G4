@@ -36,11 +36,12 @@ const StyledFlatpickr = styled(Flatpickr)`
   border-radius: 0.3rem;
 `;
 
-const AsistenciaForm = () => {
+const ReporteForm = () => {
   const [formData, setFormData] = useState({
-    brigadista: '',
-    date: new Date(),
-    markType: '',
+    titulo: '',
+    usuario: '',
+    fecha: new Date(),
+    descripcion: '',
   });
 
   const [users, setUsers] = useState([]);
@@ -54,7 +55,7 @@ const AsistenciaForm = () => {
           if (res.data.data.users.length > 0) {
             setFormData((prevFormData) => ({
               ...prevFormData,
-              brigadista: res.data.data.users[0]._id,
+              usuario: res.data.data.users[0]._id,
             }));
           }
         } else {
@@ -77,17 +78,17 @@ const AsistenciaForm = () => {
   const handleDateChange = (date) => {
     setFormData({
       ...formData,
-      date: date[0],
+      fecha: date[0],
     });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await api.post('/asistencias', formData);
-      alert('Asistencia registrada exitosamente.');
+      await api.post('/reportes', formData);
+      alert('Reporte registrado exitosamente.');
     } catch (error) {
-      alert('Error al registrar la asistencia.');
+      alert('Error al registrar el reporte.');
       console.error(error);
     }
   };
@@ -102,14 +103,22 @@ const AsistenciaForm = () => {
     >
       <FormContainer component="form" onSubmit={handleSubmit} maxWidth="sm">
         <Typography variant="h4" component="h1" gutterBottom>
-          Registrar Asistencia
+          Registrar Reporte
         </Typography>
-        <FormControl fullWidth>
-          <InputLabel id="brigadista-label">Brigadista</InputLabel>
+        <TextField
+          label="Título"
+          name="titulo"
+          value={formData.titulo}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="usuario-label">Usuario</InputLabel>
           <Select
-            labelId="brigadista-label"
-            name="brigadista"
-            value={formData.brigadista}
+            labelId="usuario-label"
+            name="usuario"
+            value={formData.usuario}
             onChange={handleChange}
             fullWidth
           >
@@ -126,31 +135,27 @@ const AsistenciaForm = () => {
             dateFormat: 'd-m-Y H:i',
             locale: Spanish,
           }}
-          value={formData.date}
+          value={formData.fecha}
           onChange={handleDateChange}
         />
-        <FormControl fullWidth>
-          <InputLabel id="mark-type-label">Tipo de Marca</InputLabel>
-          <Select
-            labelId="mark-type-label"
-            name="markType"
-            value={formData.markType}
-            onChange={handleChange}
-            fullWidth
-          >
-            <MenuItem value={"ENTRADA"}>ENTRADA</MenuItem>
-            <MenuItem value={"SALIDA"}>SALIDA</MenuItem>
-          </Select>
-        </FormControl>
-        <Button variant="contained" color="primary" type="submit">
-          Registrar Asistencia
+        <TextField
+          label="Descripción"
+          name="descripcion"
+          value={formData.descripcion}
+          onChange={handleChange}
+          multiline
+          fullWidth
+          margin="normal"
+        />
+        <Button variant="contained" color="primary" type="submit" style={{ marginTop: '1rem' }}>
+          Registrar Reporte
         </Button>
-        <Button variant="contained" color="secondary">
-          <Link href="/asistencias">Volver</Link>
+        <Button variant="contained" color="secondary" style={{ marginTop: '1rem' }}>
+          <Link href="/reportes">Volver</Link>
         </Button>
       </FormContainer>
     </Box>
   );
 };
 
-export default AsistenciaForm;
+export default ReporteForm;
