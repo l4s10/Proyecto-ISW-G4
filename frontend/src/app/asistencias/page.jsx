@@ -10,6 +10,8 @@ import api from "@/api/rootAPI";
 import { useState, useEffect } from "react";
 import Link from 'next/link';
 import CalendarAttendance from "@/components/CalendarAttendance";
+import { colors } from '../../utils/colors';
+
 
 export default function Page() {
     const [asistencias, setAsistencias] = useState([]);
@@ -28,7 +30,8 @@ export default function Page() {
         <>
         <Navbar />
         <div>
-            <Typography variant="h1">Hello, Asistencias page!</Typography>
+            <Typography variant="h2" style={{marginTop: '20px', textAlign: 'center'}}>Modulo asistencias</Typography>
+            <br></br>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                     <Card>
@@ -37,7 +40,8 @@ export default function Page() {
                         <Typography variant="body1">
                         Aquí puedes registrar una nueva asistencia.
                         </Typography>
-                        <Button variant="contained" color="primary">
+                        <br></br>
+                        <Button variant="contained" style={{ backgroundColor: colors.yellow, color: colors.primaryBlack }}>
                             <Link href='asistencias/registrar'>Registrar Nueva Asistencia</Link>
                         </Button>
                     </CardContent>
@@ -50,7 +54,8 @@ export default function Page() {
                         <Typography variant="body1">
                         Aquí puedes revisar y gestionar las asistencias de los brigadistas.
                         </Typography>
-                        <Button variant="contained" color="secondary">
+                        <br></br>
+                        <Button variant="contained" style={{ backgroundColor: colors.yellow, color: colors.primaryBlack }}>
                             <Link href='asistencias/gestionar'>Revisar</Link>
                         </Button>
                     </CardContent>
