@@ -66,7 +66,7 @@ export default function Page() {
         </Grid>
       </div>
       <div>
-        <TablaReportes reportes={reportes}></TablaReportes>
+        <TablaReportes initialReportes={reportes}></TablaReportes>
       </div>
     </>
   );
