@@ -16,6 +16,8 @@ const asistenciaRoutes = require("./attendance.routes.js");
 const reportesRoutes = require("./reportes.routes.js");
 // Importamos rutas squad (CAMILO)
 const squadRoutes = require("./squad.routes.js");
+// Importamos rutas remuneracion
+const remunerationRoutes = require("./remuneration.routes.js"); // Añade esta línea
 
 // Crea una instancia del enrutador
 const router = express.Router();
@@ -30,6 +32,8 @@ router.use("/asistencias", asistenciaRoutes);
 router.use("/reportes", reportesRoutes);
 // Definimos las rutas de squad
 router.use("/squad", squadRoutes);
+// Definimos las rutas de remuneracion
+router.use("/remuneraciones", remunerationRoutes);
 
 // Exporta el enrutador
 module.exports = router;

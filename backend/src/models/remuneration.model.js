@@ -1,21 +1,20 @@
-// remuneration.model.js
 "use strict";
 const mongoose = require("mongoose");
 
 const remunerationSchema = new mongoose.Schema({
-    brigadista: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
-    amount: {
-        type: Number,
-        required: true,
-    },
-    period: {
-        type: Date,
-        required: true,
-    },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  hoursWorked: {
+    type: Number,
+    required: true,
+  },
+  salary: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Remuneration = mongoose.model("Remuneration", remunerationSchema);

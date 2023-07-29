@@ -23,6 +23,7 @@ router.put("/:id", roleMiddleware.isAdminOrRelojControl, updateAttendance);
 router.delete("/:id", deleteAttendance);
 
 // Ruta para obtener todas las asistencias de un usuario por su ID
-router.get("/user/:userId", roleMiddleware.isAdminOrRelojControl, obtenerAsistenciasPorUsuario);
+router.get("/usuario/:userId", obtenerAsistenciasPorUsuario);
+
 
 module.exports = router;
