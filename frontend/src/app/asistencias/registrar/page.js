@@ -22,7 +22,7 @@ const FormContainer = styled(Box)`
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: #313236;
   border-radius: 0.5rem;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 `;
@@ -100,13 +100,13 @@ const AsistenciaForm = () => {
       bgcolor={colors.primaryBlack} /* Cambia el color de fondo del contenedor principal al color primario de modo oscuro */
     >
       <FormContainer component="form" onSubmit={handleSubmit} maxWidth="sm">
-        <Typography variant="h4" component="h1" gutterBottom >
+        <Typography variant="h4" component="h1" gutterBottom style={{ color: colors.white }}>
           Registrar Asistencia
         </Typography>
         <FormControl fullWidth>
         <br />
-          <InputLabel id="brigadista-label">Brigadista</InputLabel>
-          <Select
+          <InputLabel id="brigadista-label" style={{ color: colors.white }}>Brigadista</InputLabel>
+          <Select style={{ color: colors.white }}
             labelId="brigadista-label"
             name="brigadista"
             value={formData.brigadista}
@@ -120,7 +120,7 @@ const AsistenciaForm = () => {
             ))}
           </Select>
         </FormControl>
-        <StyledFlatpickr
+        <StyledFlatpickr 
           data-enable-time
           options={{
             dateFormat: 'd-m-Y H:i',
@@ -131,7 +131,7 @@ const AsistenciaForm = () => {
         />
         <FormControl fullWidth>
         <br />
-          <InputLabel id="mark-type-label">Tipo de Marca</InputLabel>
+          <InputLabel id="mark-type-label" style={{ color: colors.white }}>Tipo de Marca</InputLabel>
           <Select
             labelId="mark-type-label"
             name="markType"

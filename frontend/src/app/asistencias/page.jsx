@@ -28,13 +28,13 @@ export default function Page() {
 
     return (
         <>
-        <Navbar />
-        <div>
+        <Navbar/>
+        <div style={{ backgroundColor: colors.primaryBlack, color: colors.white, padding: '20px 0' }}>
             <Typography variant="h2" style={{marginTop: '20px', textAlign: 'center'}}>Modulo asistencias</Typography>
             <br></br>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                    <Card >
+                    <Card style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
                     <CardHeader title="Registrar Asistencia" style={{ backgroundColor: colors.primaryBlack, color: colors.white }} />
                     <CardContent style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
                         <Typography variant="body1">
@@ -48,7 +48,7 @@ export default function Page() {
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <Card>
+                    <Card style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
                     <CardHeader title="Gestionar Asistencias" style={{ backgroundColor: colors.primaryBlack, color: colors.white }} />
                     <CardContent style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
                         <Typography variant="body1" >
@@ -63,10 +63,10 @@ export default function Page() {
                 </Grid>
             </Grid>
         </div>
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: '20px', backgroundColor: colors.primaryBlack, color: colors.white }}>
             <CalendarAttendance eventos={asistencias} />
         </div>
-        <footer style={{ marginTop: '20px', textAlign: 'center' }}>
+        <footer style={{ marginTop: '20px', textAlign: 'center',backgroundColor: colors.primaryBlack, color: colors.white }}>
             <Typography variant="body2">
             © {new Date().getFullYear()} Brigadistas Unidos
             </Typography>
