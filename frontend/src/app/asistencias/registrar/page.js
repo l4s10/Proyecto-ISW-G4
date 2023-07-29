@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -15,6 +14,7 @@ import Flatpickr from 'react-flatpickr';
 import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import Box from '@mui/system/Box';
 import styled from 'styled-components';
+import { colors } from '../../../utils/colors';
 
 const FormContainer = styled(Box)`
   display: flex;
@@ -97,14 +97,14 @@ const AsistenciaForm = () => {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
-      bgcolor="#f0f2f5"
+      bgcolor={colors.primaryBlack} /* Cambia el color de fondo del contenedor principal al color primario de modo oscuro */
     >
       <FormContainer component="form" onSubmit={handleSubmit} maxWidth="sm">
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h4" component="h1" gutterBottom >
           Registrar Asistencia
         </Typography>
         <FormControl fullWidth>
-        <br></br>
+        <br />
           <InputLabel id="brigadista-label">Brigadista</InputLabel>
           <Select
             labelId="brigadista-label"
@@ -130,6 +130,7 @@ const AsistenciaForm = () => {
           onChange={handleDateChange}
         />
         <FormControl fullWidth>
+        <br />
           <InputLabel id="mark-type-label">Tipo de Marca</InputLabel>
           <Select
             labelId="mark-type-label"
@@ -143,10 +144,11 @@ const AsistenciaForm = () => {
           </Select>
         </FormControl>
         <br></br>
-        <Button variant="contained" color="primary" type="submit">
+        <Button variant="contained" style={{ backgroundColor: colors.green, color: colors.primaryBlack }} type="submit">
           Registrar Asistencia
         </Button>
-        <Button variant="contained" color="secondary">
+        <br />
+        <Button variant="contained" style={{ backgroundColor: colors.orange, color: colors.primaryBlack }}>
           <Link href="/asistencias">Volver</Link>
         </Button>
       </FormContainer>

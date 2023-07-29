@@ -13,6 +13,7 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/system";
 import Swal from 'sweetalert2';
 import FormularioEditarAsistencia from './FormularioEditarAsistencia';
+import { colors } from '../utils/colors';
 
 export default function TablaAsistencias() {
   const [asistencias, setAsistencias] = useState([]);
@@ -49,32 +50,32 @@ export default function TablaAsistencias() {
   }, []);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{ backgroundColor: colors.secondaryBlack }}>
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Brigadista</TableCell>
-            <TableCell>Fecha</TableCell>
-            <TableCell>Tipo</TableCell>
-            <TableCell>Acciones</TableCell>
+            <TableCell style={{ color: colors.white }}>Brigadista</TableCell>
+            <TableCell style={{ color: colors.white }}>Fecha</TableCell>
+            <TableCell style={{ color: colors.white }}>Tipo</TableCell>
+            <TableCell style={{ color: colors.white }}>Acciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {asistencias.map((asistencia) => (
             <TableRow key={asistencia._id}>
-              <TableCell>{asistencia.brigadista.name}</TableCell>
-              <TableCell>
+              <TableCell style={{ color: colors.white }}>{asistencia.brigadista.name}</TableCell>
+              <TableCell style={{ color: colors.white }}>
                 {
                   `Marcó el dia: ${new Date(asistencia.date).toLocaleDateString()} a las ${new Date(asistencia.date).toLocaleTimeString()} horas`
                 }
               </TableCell>
-              <TableCell>{asistencia.markType}</TableCell>
+              <TableCell style={{ color: colors.white }}>{asistencia.markType}</TableCell>
               <TableCell>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-                  <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleOpenModal(asistencia)}>
+                  <Button variant="contained" style={{ backgroundColor: colors.green, color: colors.primaryBlack }} sx={{ mr: 1 }} onClick={() => handleOpenModal(asistencia)}>
                     Editar
                   </Button>
-                  <Button variant="contained" color="secondary" onClick={() => handleDelete(asistencia._id)}>Eliminar</Button>
+                  <Button variant="contained" style={{ backgroundColor: colors.orange, color: colors.primaryBlack }} onClick={() => handleDelete(asistencia._id)}>Eliminar</Button>
                 </Box>
               </TableCell>
             </TableRow>

@@ -14,6 +14,7 @@ import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import Box from '@mui/system/Box';
 import Modal from '@mui/material/Modal';
 import styled from 'styled-components';
+import { colors } from '../utils/colors';
 
     const StyledFlatpickr = styled(Flatpickr)`
         width: 100%;
@@ -32,6 +33,13 @@ import styled from 'styled-components';
     background-color: #ffffff;
     border-radius: 0.5rem;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+
+    /* Establece el ancho máximo y centra el modal en la pantalla */
+    max-width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     `;
 
     const FormularioEditarAsistencia = ({ asistencia, open, handleClose, onUpdate }) => {
@@ -103,6 +111,7 @@ import styled from 'styled-components';
             Editar Asistencia
             </Typography>
             <FormControl fullWidth>
+            <br />
             <InputLabel id="brigadista-label">Brigadista</InputLabel>
             <Select
                 labelId="brigadista-label"
@@ -128,6 +137,7 @@ import styled from 'styled-components';
             onChange={handleDateChange}
             />
             <FormControl fullWidth>
+            <br />
             <InputLabel id="mark-type-label">Tipo de Marca</InputLabel>
             <Select
                 labelId="mark-type-label"
@@ -140,10 +150,12 @@ import styled from 'styled-components';
                 <MenuItem value={"SALIDA"}>SALIDA</MenuItem>
             </Select>
             </FormControl>
-            <Button variant="contained" color="primary" type="submit">
+            <br />
+            <Button variant="contained" style={{ backgroundColor: colors.green, color: colors.primaryBlack }} type="submit">
             Actualizar Asistencia
             </Button>
-            <Button variant="contained" color="secondary" onClick={handleClose}>
+            <br />
+            <Button variant="contained" style={{ backgroundColor: colors.orange, color: colors.primaryBlack }} onClick={handleClose}>
             Cerrar
             </Button>
         </FormContainer>
