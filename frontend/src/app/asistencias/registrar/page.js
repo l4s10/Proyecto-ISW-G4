@@ -4,7 +4,6 @@
 import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
@@ -105,6 +104,7 @@ const AsistenciaForm = () => {
           Registrar Asistencia
         </Typography>
         <FormControl fullWidth>
+        <br></br>
           <InputLabel id="brigadista-label">Brigadista</InputLabel>
           <Select
             labelId="brigadista-label"
@@ -142,6 +142,7 @@ const AsistenciaForm = () => {
             <MenuItem value={"SALIDA"}>SALIDA</MenuItem>
           </Select>
         </FormControl>
+        <br></br>
         <Button variant="contained" color="primary" type="submit">
           Registrar Asistencia
         </Button>
