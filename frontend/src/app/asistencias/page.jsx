@@ -62,15 +62,13 @@ export default function Page() {
                     </Card>
                 </Grid>
             </Grid>
-        </div>
-        <div style={{ marginTop: '20px', backgroundColor: colors.primaryBlack, color: colors.white }}>
             <CalendarAttendance eventos={asistencias} />
+            <footer style={{ marginTop: '20px', textAlign: 'center',backgroundColor: colors.primaryBlack, color: colors.white }}>
+                <Typography variant="body2">
+                © {new Date().getFullYear()} Brigadistas Unidos
+                </Typography>
+            </footer>
         </div>
-        <footer style={{ marginTop: '20px', textAlign: 'center',backgroundColor: colors.primaryBlack, color: colors.white }}>
-            <Typography variant="body2">
-            © {new Date().getFullYear()} Brigadistas Unidos
-            </Typography>
-        </footer>
         </>
     );
     }
