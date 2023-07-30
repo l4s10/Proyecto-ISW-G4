@@ -101,7 +101,7 @@ const AsistenciaForm = () => {
     >
       <FormContainer component="form" onSubmit={handleSubmit} maxWidth="sm">
         <Typography variant="h4" component="h1" gutterBottom style={{ color: colors.white }}>
-          Registrar Asistencia
+          Registro de Asistencia
         </Typography>
         <FormControl fullWidth>
         <br />
@@ -146,7 +146,7 @@ const AsistenciaForm = () => {
         </FormControl>
         <br></br>
         <Button variant="contained" style={{ backgroundColor: colors.green, color: colors.primaryBlack }} type="submit">
-          Registrar Asistencia
+        Ingresar
         </Button>
         <br />
         <Button variant="contained" style={{ backgroundColor: colors.orange, color: colors.primaryBlack }}>

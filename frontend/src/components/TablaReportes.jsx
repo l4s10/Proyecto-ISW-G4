@@ -6,10 +6,11 @@ import React, { useState, useEffect } from 'react';
 import api from '@/api/rootAPI';  // Asegúrate de importar tu módulo de API aquí
 import Swal from 'sweetalert2';  // Importa SweetAlert2
 import { colors } from '../utils/colors';
-
+import FormularioEditarReportes from './FormularioEditarReportes';
 
 function TablaReportes({ initialReportes }) {
   const [reportes, setReportes] = useState(initialReportes);
+  const [selectedReporte, setSelectedReporte] = useState(null); // Nuevo estado
   const theme = useTheme();
 
   const fetchReportes = async () => {
@@ -27,6 +28,8 @@ function TablaReportes({ initialReportes }) {
 
   const handleEdit = (id) => {
     // Aquí puedes manejar la lógica para editar el reporte
+    const reporte = reportes.find((r) => r._id === id);
+    setSelectedReporte(reporte);
     console.log(`Editar reporte con id ${id}`);
   };
 
@@ -115,7 +118,14 @@ function TablaReportes({ initialReportes }) {
           ))}
         </TableBody>
       </Table>
+      <FormularioEditarReportes
+      reporte={selectedReporte}
+      isOpen={!!selectedReporte}
+      onClose={() => setSelectedReporte(null)}
+      onUpdate={() => fetchReportes()}
+    />
     </TableContainer>
+    
   );
 }
 

@@ -162,7 +162,7 @@ const ReporteForm = () => {
           }}
         />
         <Button variant="contained" color="primary" type="submit" style={{ marginTop: '1rem', backgroundColor: colors.green, color: colors.primaryBlack }}>
-          Registrar Reporte
+        Ingresar
         </Button>
         <Button variant="contained" color="secondary" style={{ marginTop: '1rem', backgroundColor: colors.orange, color: colors.primaryBlack }}>
           <Link href="/reportes">Volver</Link>

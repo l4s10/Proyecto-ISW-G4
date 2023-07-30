@@ -22,11 +22,16 @@ import Link from 'next/link';
 // Importaciones adicionales
 import { Button } from "@mui/material";
 import Swal from 'sweetalert2';
+import FormularioEditarCuadrilla from '@/components/FormularioEditarCuadrilla'; // Importa el componente FormularioEditarCuadrilla
+
 
 export default function Page() {
   // Hooks para cuadrillas
   const [cuadrillas, setCuadrillas] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCuadrilla, setSelectedCuadrilla] = useState(null);
 
+ 
   // Definimos funcion para obtener cuadrillas
   const fetchCuadrillas = async () => {
     try {
@@ -76,6 +81,16 @@ export default function Page() {
     }
   };
 
+  const handleEdit = (cuadrilla) => {
+    setSelectedCuadrilla(cuadrilla);
+    setIsModalOpen(true);
+  };
+
+  const handleCreate = () => {
+    setSelectedCuadrilla(null);
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     fetchCuadrillas().then(data => setCuadrillas(data));
     console.log(cuadrillas);
@@ -85,17 +100,19 @@ export default function Page() {
     <>
       <Navbar />
       <div style={{ backgroundColor: colors.primaryBlack, color: colors.white, padding: '20px 0' }}>
-        <Typography variant="h1">Hello, Cuadrillas page!</Typography>
+        <Typography variant="h2" style={{ marginTop: '20px', textAlign: 'center' }}>Modulo de Cuadrillas</Typography>
+        <br />
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <Card style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
-              <CardHeader style={{ backgroundColor: colors.primaryBlack, color: colors.white }} title="Registrar Cuadrilla" />
-              <CardContent style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
+          <Grid item xs={6} sm={6}>
+            <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
+              <CardHeader style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} title="Registrar Cuadrilla" />
+              <CardContent style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
                 <Typography  variant="body1">
                   Aquí puedes registrar una nueva cuadrilla.
                 </Typography>
+                <br />
                 <Button variant="contained" style={{ backgroundColor: colors.yellow, color: colors.primaryBlack }}>
-                  <Link href='cuadrillas/registrar'>
+                  <Link href='/cuadrillas/registrar'>
                     Registrar Nueva Cuadrilla
                   </Link>
                 </Button>
@@ -103,12 +120,13 @@ export default function Page() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Card style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
-              <CardHeader  style={{ backgroundColor: colors.primaryBlack, color: colors.white }} title="Ver Cuadrillas" />
-              <CardContent style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
+            <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
+              <CardHeader  style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} title="Ver Cuadrillas" />
+              <CardContent style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
                 <Typography variant="body1">
                   Aquí puedes ver las cuadrillas registradas.
                 </Typography>
+                <br />
                 <Button variant="contained" style={{ backgroundColor: colors.yellow, color: colors.primaryBlack }}>
                   Ver Cuadrillas
                 </Button>
@@ -116,7 +134,9 @@ export default function Page() {
             </Card>
           </Grid>
         </Grid>
-        <TableContainer style={{ backgroundColor: colors.primaryBlack, color: colors.white }} component={Paper}>
+        <br />
+        <Typography variant="h5" align="center" style={{ marginBottom: '20px' }}>Lista de Cuadrillas</Typography>
+        <TableContainer style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow> 
@@ -140,13 +160,11 @@ export default function Page() {
                     ))}
                   </TableCell>
                   <TableCell >
-                  <Button variant="contained" style={{ backgroundColor: colors.green , color: colors.primaryBlack }} sx={{ mr: 1 }}>
-                    <Link href={`/cuadrillas/editar/${cuadrilla._id}`}>
-                        Editar
-                    </Link>
-                  </Button>
-                    <Button variant="contained" style={{ backgroundColor: colors.orange , color: colors.primaryBlack }} onClick={() => handleDelete(cuadrilla._id)}>
-                    Eliminar
+                    <Button variant="contained" style={{ backgroundColor: colors.green, color: colors.primaryBlack }} sx={{ mr: 1 }} onClick={() => handleEdit(cuadrilla)}>
+                      Editar
+                    </Button>
+                    <Button variant="contained" style={{ backgroundColor: colors.orange, color: colors.primaryBlack }} onClick={() => handleDelete(cuadrilla._id)}>
+                      Eliminar
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -154,6 +172,24 @@ export default function Page() {
             </TableBody>
           </Table>
         </TableContainer>
+        <footer style={{ marginTop: '20px', textAlign: 'center', backgroundColor: colors.primaryBlack, color: colors.white }}>
+          <Typography variant="body2">
+            © {new Date().getFullYear()} Brigadistas Unidos
+          </Typography>
+        </footer>
+
+        {/* Modal para editar o crear una cuadrilla */}
+        {isModalOpen && (
+          <FormularioEditarCuadrilla
+            cuadrilla={selectedCuadrilla}
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onUpdate={() => {
+              // Actualiza la lista de cuadrillas después de editar o crear una nueva cuadrilla
+              fetchCuadrillas().then(data => setCuadrillas(data));
+            }}
+          />
+        )}
       </div>
     </>
   );

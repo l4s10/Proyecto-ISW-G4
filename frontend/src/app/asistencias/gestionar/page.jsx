@@ -15,12 +15,12 @@ export default function BrigadaAsistencias() {
         <>
             <Navbar />
             <div style={{ backgroundColor: colors.secondaryBlack, minHeight: '100vh', padding: '1rem' }}>
-                <Card >
+                <Card style={{ backgroundColor: colors.primaryBlack}}>
                     <CardContent>
-                        <Typography variant="h4" component="div" >
+                        <Typography variant="h4" component="div" style={{ color: colors.white }} >
                             Asistencias de la Brigada
                         </Typography>
-                        <Typography variant="body1" color="text.secondary">
+                        <Typography variant="body1" style={{ color: colors.white }}>
                             Aquí puedes ver las asistencias registradas por cada brigada.
                         </Typography>
                         <Button variant="contained" style={{ backgroundColor: colors.orange, color: colors.primaryBlack }}>

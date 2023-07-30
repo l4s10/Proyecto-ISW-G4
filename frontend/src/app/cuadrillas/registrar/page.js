@@ -153,7 +153,7 @@ const CuadrillaForm = () => {
           ) : null
         )}
         <Button variant="contained" color="primary" type="submit" style={{ marginTop: '1rem', backgroundColor: colors.green, color: colors.primaryBlack }}>
-          Registrar Cuadrilla
+        Ingresar
         </Button>
         <Button variant="contained" color="secondary" style={{ marginTop: '1rem', backgroundColor: colors.orange, color: colors.primaryBlack }}>
           <Link href="/cuadrillas">Volver</Link>
@@ -162,6 +162,5 @@ const CuadrillaForm = () => {
     </Box>
   );
 };
-
 export default CuadrillaForm;
 

@@ -62,7 +62,7 @@ export default function Page() {
                     </Card>
                 </Grid>
             </Grid>
-            <Typography variant="h4"> Calendario de asistencias </Typography>
+            <Typography style={{ padding: '20px 0',textAlign: 'center'}} variant="h4"> Calendario de asistencias </Typography>
             <CalendarAttendance eventos={asistencias} />
             <footer style={{ marginTop: '20px', textAlign: 'center',backgroundColor: colors.primaryBlack, color: colors.white }}>
                 <Typography variant="body2">
