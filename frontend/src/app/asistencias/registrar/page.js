@@ -138,6 +138,7 @@ const AsistenciaForm = () => {
             value={formData.markType}
             onChange={handleChange}
             fullWidth
+            style={{ color: colors.white }}
           >
             <MenuItem value={"ENTRADA"}>ENTRADA</MenuItem>
             <MenuItem value={"SALIDA"}>SALIDA</MenuItem>

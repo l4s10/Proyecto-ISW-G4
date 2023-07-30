@@ -17,13 +17,15 @@ import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import Box from '@mui/system/Box';
 import styled from 'styled-components';
 
+import { colors } from '../../../utils/colors';
+
 const FormContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: #313236;
   border-radius: 0.5rem;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
 `;
@@ -99,10 +101,10 @@ const ReporteForm = () => {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
-      bgcolor="#f0f2f5"
+      bgcolor={colors.primaryBlack} /* Cambia el color de fondo del contenedor principal al color primario de modo oscuro */
     >
       <FormContainer component="form" onSubmit={handleSubmit} maxWidth="sm">
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h4" component="h1" gutterBottom style={{ color: colors.white }}>
           Registrar Reporte
         </Typography>
         <TextField
@@ -112,10 +114,16 @@ const ReporteForm = () => {
           onChange={handleChange}
           fullWidth
           margin="normal"
+          InputLabelProps={{
+            style: { color: colors.white }, // Cambia el color del label del input
+          }}
+          InputProps={{
+            style: { color: colors.white }, // Cambia el color del texto del input
+          }}
         />
         <FormControl fullWidth margin="normal">
-          <InputLabel id="usuario-label">Usuario</InputLabel>
-          <Select
+          <InputLabel style={{ color: colors.white }} id="usuario-label">Usuario</InputLabel>
+          <Select style={{ color: colors.white }}
             labelId="usuario-label"
             name="usuario"
             value={formData.usuario}
@@ -138,7 +146,7 @@ const ReporteForm = () => {
           value={formData.fecha}
           onChange={handleDateChange}
         />
-        <TextField
+        <TextField 
           label="Descripción"
           name="descripcion"
           value={formData.descripcion}
@@ -146,11 +154,17 @@ const ReporteForm = () => {
           multiline
           fullWidth
           margin="normal"
+          InputLabelProps={{
+            style: { color: colors.white }, // Cambia el color del label del input
+          }}
+          InputProps={{
+            style: { color: colors.white }, // Cambia el color del texto del input
+          }}
         />
-        <Button variant="contained" color="primary" type="submit" style={{ marginTop: '1rem' }}>
+        <Button variant="contained" color="primary" type="submit" style={{ marginTop: '1rem', backgroundColor: colors.green, color: colors.primaryBlack }}>
           Registrar Reporte
         </Button>
-        <Button variant="contained" color="secondary" style={{ marginTop: '1rem' }}>
+        <Button variant="contained" color="secondary" style={{ marginTop: '1rem', backgroundColor: colors.orange, color: colors.primaryBlack }}>
           <Link href="/reportes">Volver</Link>
         </Button>
       </FormContainer>

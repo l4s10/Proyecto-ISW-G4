@@ -9,6 +9,8 @@ import Navbar from "@/components/Navbar";
 import React, { useEffect, useState } from 'react';
 import api from "@/api/rootAPI";
 
+import { colors } from '../../utils/colors';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -82,17 +84,17 @@ export default function Page() {
   return (
     <>
       <Navbar />
-      <div>
+      <div style={{ backgroundColor: colors.primaryBlack, color: colors.white, padding: '20px 0' }}>
         <Typography variant="h1">Hello, Cuadrillas page!</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Card>
-              <CardHeader title="Registrar Cuadrilla" />
-              <CardContent>
-                <Typography variant="body1">
+            <Card style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
+              <CardHeader style={{ backgroundColor: colors.primaryBlack, color: colors.white }} title="Registrar Cuadrilla" />
+              <CardContent style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
+                <Typography  variant="body1">
                   Aquí puedes registrar una nueva cuadrilla.
                 </Typography>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" style={{ backgroundColor: colors.yellow, color: colors.primaryBlack }}>
                   <Link href='cuadrillas/registrar'>
                     Registrar Nueva Cuadrilla
                   </Link>
@@ -101,27 +103,27 @@ export default function Page() {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Card>
-              <CardHeader title="Ver Cuadrillas" />
-              <CardContent>
+            <Card style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
+              <CardHeader  style={{ backgroundColor: colors.primaryBlack, color: colors.white }} title="Ver Cuadrillas" />
+              <CardContent style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
                 <Typography variant="body1">
                   Aquí puedes ver las cuadrillas registradas.
                 </Typography>
-                <Button variant="contained" color="secondary">
+                <Button variant="contained" style={{ backgroundColor: colors.yellow, color: colors.primaryBlack }}>
                   Ver Cuadrillas
                 </Button>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
-        <TableContainer component={Paper}>
+        <TableContainer style={{ backgroundColor: colors.primaryBlack, color: colors.white }} component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
-                <TableCell>Cuadrilla</TableCell>
-                <TableCell>Jefe de cuadrilla</TableCell>
-                <TableCell>Otros miembros</TableCell>
-                <TableCell>Acciones</TableCell>
+              <TableRow> 
+                <TableCell style={{ color: colors.white }} >Cuadrilla</TableCell>
+                <TableCell style={{ color: colors.white }}>Jefe de cuadrilla</TableCell>
+                <TableCell style={{ color: colors.white }}>Otros miembros</TableCell>
+                <TableCell style={{ color: colors.white }}>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -130,20 +132,20 @@ export default function Page() {
                   key={cuadrilla._id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell>{cuadrilla.name}</TableCell>
-                  <TableCell>{cuadrilla.squadLeader.name}</TableCell>
-                  <TableCell>
+                  <TableCell style={{ color: colors.white }}>{cuadrilla.name}</TableCell>
+                  <TableCell style={{ color: colors.white }}>{cuadrilla.squadLeader.name}</TableCell>
+                  <TableCell style={{ color: colors.white }}>
                     {cuadrilla.brigadistas?.map((brigadista) => (
                       <p key={brigadista._id}>{brigadista.name}</p>
                     ))}
                   </TableCell>
-                  <TableCell>
-                  <Button variant="contained" color="primary" sx={{ mr: 1 }}>
+                  <TableCell >
+                  <Button variant="contained" style={{ backgroundColor: colors.green , color: colors.primaryBlack }} sx={{ mr: 1 }}>
                     <Link href={`/cuadrillas/editar/${cuadrilla._id}`}>
                         Editar
                     </Link>
-                   </Button>
-                    <Button variant="contained" color="secondary" onClick={() => handleDelete(cuadrilla._id)}>
+                  </Button>
+                    <Button variant="contained" style={{ backgroundColor: colors.orange , color: colors.primaryBlack }} onClick={() => handleDelete(cuadrilla._id)}>
                     Eliminar
                     </Button>
                   </TableCell>

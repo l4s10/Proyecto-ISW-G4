@@ -5,6 +5,8 @@ import { useTheme } from '@mui/material/styles';
 import React, { useState, useEffect } from 'react';
 import api from '@/api/rootAPI';  // Asegúrate de importar tu módulo de API aquí
 import Swal from 'sweetalert2';  // Importa SweetAlert2
+import { colors } from '../utils/colors';
+
 
 function TablaReportes({ initialReportes }) {
   const [reportes, setReportes] = useState(initialReportes);
@@ -71,40 +73,39 @@ function TablaReportes({ initialReportes }) {
   }, []);
 
   return (
-    <TableContainer component={Paper}>
-      <Table>
+    <TableContainer style={{ backgroundColor: colors.secondaryBlack }} component={Paper}>
+      <Table >
         <TableHead>
           <TableRow>
-            <TableCell>Titulo</TableCell>
-            <TableCell>Usuario</TableCell>
-            <TableCell>Fecha</TableCell>
-            <TableCell>Descripcion</TableCell>
-            <TableCell>Acciones</TableCell>
+            <TableCell style={{ color: colors.white }}>Titulo</TableCell>
+            <TableCell style={{ color: colors.white }}>Usuario</TableCell>
+            <TableCell style={{ color: colors.white }}>Fecha</TableCell>
+            <TableCell style={{ color: colors.white }}>Descripcion</TableCell>
+            <TableCell style={{ color: colors.white }}>Acciones</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {reportes.map(reporte => (
             <TableRow key={reporte._id}>
-              <TableCell>{reporte.titulo}</TableCell>
-              <TableCell>{reporte.usuario.name}</TableCell>
-              <TableCell>
+              <TableCell style={{ color: colors.white }}>{reporte.titulo}</TableCell>
+              <TableCell style={{ color: colors.white }}>{reporte.usuario.name}</TableCell>
+              <TableCell style={{ color: colors.white }}>
                 {
                   `Creado el: ${new Date(reporte.fecha).toLocaleDateString()} a las ${new Date(reporte.fecha).toLocaleTimeString()} horas`
                 }
               </TableCell>
-              <TableCell>{reporte.descripcion}</TableCell>
+              <TableCell style={{ color: colors.white }}>{reporte.descripcion}</TableCell>
               <TableCell>
                 <Button 
-                  variant="contained" 
-                  color="primary" 
-                  style={{marginRight: theme.spacing(1)}}
+                  variant="contained"  
+                  style={{backgroundColor: colors.green, color: colors.primaryBlack ,marginRight: theme.spacing(1)}}
                   onClick={() => handleEdit(reporte._id)}
                 >
                   Editar
                 </Button>
                 <Button 
                   variant="contained" 
-                  color="secondary" 
+                  style={{backgroundColor: colors.orange, color: colors.primaryBlack}}
                   onClick={() => handleDelete(reporte._id)}
                 >
                   Eliminar
