@@ -34,9 +34,9 @@ export default function Page() {
             <br></br>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                    <Card style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
-                    <CardHeader title="Registrar Asistencia" style={{ backgroundColor: colors.primaryBlack, color: colors.white }} />
-                    <CardContent style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
+                    <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
+                    <CardHeader title="Registrar Asistencia" style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} />
+                    <CardContent style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
                         <Typography variant="body1">
                         Aquí puedes registrar una nueva asistencia.
                         </Typography>
@@ -48,9 +48,9 @@ export default function Page() {
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <Card style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
-                    <CardHeader title="Gestionar Asistencias" style={{ backgroundColor: colors.primaryBlack, color: colors.white }} />
-                    <CardContent style={{ backgroundColor: colors.primaryBlack, color: colors.white }}>
+                    <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
+                    <CardHeader title="Gestionar Asistencias" style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} />
+                    <CardContent style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
                         <Typography variant="body1" >
                         Aquí puedes revisar y gestionar las asistencias de los brigadistas.
                         </Typography>
@@ -62,6 +62,7 @@ export default function Page() {
                     </Card>
                 </Grid>
             </Grid>
+            <Typography variant="h4"> Calendario de asistencias </Typography>
             <CalendarAttendance eventos={asistencias} />
             <footer style={{ marginTop: '20px', textAlign: 'center',backgroundColor: colors.primaryBlack, color: colors.white }}>
                 <Typography variant="body2">
