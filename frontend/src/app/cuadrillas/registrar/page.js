@@ -6,7 +6,20 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import api from '@/api/rootAPI';
 import Link from 'next/link';
+import Box from '@mui/system/Box';
+import styled from 'styled-components';
+import { colors } from '../../../utils/colors';
 
+const FormContainer = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #313236;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+`;
 
 const CuadrillaForm = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +34,7 @@ const CuadrillaForm = () => {
     const fetchUsers = async () => {
       try {
         const res = await api.get('/users');
-        if (res.data && res.data.state === "Success" && Array.isArray(res.data.data.users)) {
+        if (res.data && res.data.state === 'Success' && Array.isArray(res.data.data.users)) {
           setUsers(res.data.data.users);
           if (res.data.data.users.length > 0) {
             setFormData((prevFormData) => ({
@@ -67,16 +80,32 @@ const CuadrillaForm = () => {
   };
 
   return (
-    <div>
-      <Typography variant="h1">Registrar Cuadrilla</Typography>
-      <form onSubmit={handleSubmit}>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      bgcolor={colors.primaryBlack} /* Cambia el color de fondo del contenedor principal al color primario de modo oscuro */
+    >
+      <FormContainer component="form" onSubmit={handleSubmit} maxWidth="sm">
+        <Typography variant="h4" component="h1" gutterBottom style={{ color: colors.white }}>
+          Registrar Cuadrilla
+        </Typography>
         <TextField
           label="Nombre"
           name="name"
           value={formData.name}
           onChange={handleChange}
           fullWidth
+          margin="normal"
+          InputLabelProps={{
+            style: { color: colors.white }, // Cambia el color del label del input
+          }}
+          InputProps={{
+            style: { color: colors.white }, // Cambia el color del texto del input
+          }}
         />
+        <br></br>
         <TextField
           select
           label="Líder de la Cuadrilla"
@@ -84,6 +113,12 @@ const CuadrillaForm = () => {
           value={formData.squadLeader}
           onChange={handleChange}
           fullWidth
+          InputLabelProps={{
+            style: { color: colors.white }, // Cambia el color del label del input
+          }}
+          InputProps={{
+            style: { color: colors.white }, // Cambia el color del texto del input
+          }}
         >
           {users.map((user) => (
             <MenuItem key={user._id} value={user._id}>
@@ -91,34 +126,42 @@ const CuadrillaForm = () => {
             </MenuItem>
           ))}
         </TextField>
+        <br></br>
         {[...Array(formData.brigadistas.length + 1)].map((_, index) =>
           index < 4 ? (
             <TextField
+              key={index}
               select
               label={`Brigadista ${index + 1}`}
               name={`brigadista-${index}`}
               value={formData.brigadistas[index] || ''}
               onChange={handleBrigadistaChange(index)}
               fullWidth
+              InputLabelProps={{
+                style: { color: colors.white }, // Cambia el color del label del input
+              }}
+              InputProps={{
+                style: { color: colors.white }, // Cambia el color del texto del input
+              }}
             >
-              {users
-                .map((user) => (
-                  <MenuItem key={user._id} value={user._id} disabled={formData.brigadistas.includes(user._id)}>
-                    {user.name}
-                  </MenuItem>
-                ))}
+              {users.map((user) => (
+                <MenuItem key={user._id} value={user._id} disabled={formData.brigadistas.includes(user._id)}>
+                  {user.name}
+                </MenuItem>
+              ))}
             </TextField>
           ) : null
         )}
-        <Button variant="contained" color="primary" type="submit">
+        <Button variant="contained" color="primary" type="submit" style={{ marginTop: '1rem', backgroundColor: colors.green, color: colors.primaryBlack }}>
           Registrar Cuadrilla
         </Button>
-        <Button variant="contained" color="secondary">
-          <Link href='cuadrillas'>Volver</Link>
+        <Button variant="contained" color="secondary" style={{ marginTop: '1rem', backgroundColor: colors.orange, color: colors.primaryBlack }}>
+          <Link href="/cuadrillas">Volver</Link>
         </Button>
-      </form>
-    </div>
+      </FormContainer>
+    </Box>
   );
 };
 
 export default CuadrillaForm;
+
