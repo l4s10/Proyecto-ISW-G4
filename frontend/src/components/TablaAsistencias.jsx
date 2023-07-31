@@ -22,7 +22,8 @@ export default function TablaAsistencias() {
 
   const fetchAsistencias = async () => {
     const res = await api.get('/asistencias');
-    setAsistencias(res.data.attendances);
+    const sortedAsistencias = res.data.attendances.sort((a, b) => new Date(b.date) - new Date(a.date)); // Ordenar las fechas de forma descendente
+    setAsistencias(sortedAsistencias);
   };
 
   const handleDelete = async (id) => {
