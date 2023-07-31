@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -17,6 +16,7 @@ import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import Box from '@mui/system/Box';
 import styled from 'styled-components';
 import useAuth from "@/hooks/useAuth";
+import Swal from 'sweetalert2';
 
 import { colors } from "@/utils/colors";
 
@@ -108,9 +108,17 @@ const ReporteForm = () => {
     event.preventDefault();
     try {
       await api.post('/reportes', formData);
-      alert('Reporte registrado exitosamente.');
+      Swal.fire({
+        icon: 'success',
+        title: '¡Buen trabajo!',
+        text: 'Reporte registrado exitosamente.',
+      });
     } catch (error) {
-      alert('Error al registrar el reporte.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Error al registrar el reporte.',
+      });
       console.error(error);
     }
   };

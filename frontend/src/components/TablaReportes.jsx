@@ -41,7 +41,6 @@ function TablaReportes({ initialReportes }) {
   const handleEdit = (id) => {
     const reporte = reportes.find((r) => r._id === id);
     setSelectedReporte(reporte);
-    console.log(`Editar reporte con id ${id}`);
   };
 
   const handleDelete = async (id) => {

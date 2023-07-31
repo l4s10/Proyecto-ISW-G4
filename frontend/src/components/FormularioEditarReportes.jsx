@@ -10,10 +10,10 @@ import MenuItem from '@mui/material/MenuItem';
 import styled from 'styled-components';
 import api from '@/api/rootAPI';
 import { colors } from '../utils/colors';
-
 import 'flatpickr/dist/themes/material_green.css';
 import Flatpickr from 'react-flatpickr';
 import { Spanish } from 'flatpickr/dist/l10n/es.js';
+import Swal from 'sweetalert2';
 
 const FormContainer = styled(Box)`
 display: flex;
@@ -103,13 +103,21 @@ const handleDateChange = (date) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-        await api.put(`/reportes/${reporte._id}`, formData);
-        alert('Reporte actualizado exitosamente.');
-        onUpdate(); // Llama a onUpdate cuando la cuadrilla se actualiza exitosamente
-        onClose();
+            await api.put(`/reportes/${reporte._id}`, formData);
+            Swal.fire({
+                icon: 'success',
+                title: '¡Exitoso!',
+                text: 'Reporte actualizado exitosamente.',
+            });
+            onUpdate(); // Llama a onUpdate cuando la cuadrilla se actualiza exitosamente
+            onClose();
         } catch (error) {
-        alert('Error al guardar el reporte.');
-        console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: 'Error al guardar el reporte.',
+            });
+            console.error(error);
         }
     };
 
