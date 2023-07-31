@@ -21,11 +21,23 @@ const ReportesPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    function setVhProperty() {
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+  
+    setVhProperty();
+  
+    window.addEventListener('resize', setVhProperty);
+  
+    return () => window.removeEventListener('resize', setVhProperty);
+  }, []);
+
+  useEffect(() => {
     const fetchReportes = async () => {
       try {
         setIsLoading(true);
         let res;
-        //Para rol administrador (por id)
         if(user.roles.includes('64b9468015f4e5e680586755')) {
           res = await api.get('/reportes');
         } else {
@@ -49,7 +61,7 @@ const ReportesPage = () => {
   }, []);
 
   if (isLoading) {
-    return <p>Loading...</p>;  // You can replace this with a loading spinner or similar if you like
+    return <p>Loading...</p>;  
   }
 
   if (error) {
@@ -59,7 +71,7 @@ const ReportesPage = () => {
   return (
     <>
       <Navbar />
-      <div style={{ backgroundColor: colors.primaryBlack, color: colors.white, padding: '20px 0' }}>
+      <div style={{ minHeight: 'calc(var(--vh, 1vh) * 100)', backgroundColor: colors.primaryBlack, color: colors.white, padding: '20px 0' }}>
         <Typography variant="h2" align="center" style={{ marginBottom: '20px' }}>Modulo de Reportes</Typography>
         {token && user.roles.includes('64b9468015f4e5e680586755') && (
           <Grid container spacing={2} justifyContent="center">
