@@ -85,7 +85,7 @@ import { colors } from '../utils/colors';
                 <p>Tipo: {selectedEvent.markType}</p>
                 <br></br>
                 {/* Agrega aquí más detalles o información adicional según tus necesidades */}
-                <button style={{ backgroundColor: colors.orange, color: colors.primaryBlack }} onClick={handleCloseModal}>Cerrar</button>
+                <button style={{ backgroundColor: colors.orange, color: colors.primaryBlack }} onClick={handleCloseModal}>Salir</button>
                 </>
             )}
             </Box>
