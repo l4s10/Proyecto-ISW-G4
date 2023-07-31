@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal';
 import { Box } from '@mui/system';
 import { colors } from '../utils/colors';
 
-    export default function CalendarAttendance({ eventos }) {
+    export default function CalendarAttendance({ eventos, user }) {
     const [selectedEvent, setSelectedEvent] = useState(null);
 
     // Mapea los tipos de marca a los colores correspondientes
@@ -78,7 +78,7 @@ import { colors } from '../utils/colors';
                 <>
                 <h2>Detalles de la asistencia</h2>
                 <br></br>
-                <p>Perfil: {selectedEvent.brigadista.name}</p>
+                <p>Perfil: {user.name}</p>
                 <br></br>
                 <p>Fecha: {new Date(selectedEvent.date).toLocaleString()}</p>
                 <br></br>

@@ -104,7 +104,7 @@ export default function Page() {
                     </Grid>
                 )}
                 <Typography style={{ padding: '20px 0',textAlign: 'center'}} variant="h4"> Calendario de asistencias </Typography>
-                <CalendarAttendance eventos={asistencias && asistencias.length > 0 ? asistencias : []} />
+                <CalendarAttendance eventos={asistencias && asistencias.length > 0 ? asistencias : []} user={auth.user} />
         
                 <footer style={{ marginTop: '20px', textAlign: 'center',backgroundColor: colors.primaryBlack, color: colors.white }}>
                     <Typography variant="body2">
