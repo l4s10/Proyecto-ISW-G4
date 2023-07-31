@@ -3,10 +3,10 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from "@mui/material";
 import { colors } from "@/utils/colors";
 import React from 'react';
-import useAuth from "@/hooks/useAuth";  // Asegúrate de importar el hook de autenticación
+import useAuth from "@/hooks/useAuth";
 
 const CuadrillasTable = ({ cuadrillas, handleEdit, handleDelete }) => {
-    const auth = useAuth();  // Usa el hook de autenticación para acceder al objeto auth
+    const auth = useAuth();
 
     return (
         <TableContainer style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} component={Paper}>
@@ -16,7 +16,7 @@ const CuadrillasTable = ({ cuadrillas, handleEdit, handleDelete }) => {
                         <TableCell style={{ color: colors.white }} >Cuadrilla</TableCell>
                         <TableCell style={{ color: colors.white }}>Jefe de cuadrilla</TableCell>
                         <TableCell style={{ color: colors.white }}>Otros miembros</TableCell>
-                        {auth.user.roles.includes('64b9468015f4e5e680586755') && (
+                        {auth.user && auth.user.roles.includes('64b9468015f4e5e680586755') && (
                             <TableCell style={{ color: colors.white }}>Acciones</TableCell>
                         )}
                     </TableRow>
@@ -34,7 +34,7 @@ const CuadrillasTable = ({ cuadrillas, handleEdit, handleDelete }) => {
                                     <p key={brigadista._id}>{brigadista.name}</p>
                                 ))}
                             </TableCell>
-                            {auth.user.roles.includes('64b9468015f4e5e680586755') && (
+                            {auth.user && auth.user.roles.includes('64b9468015f4e5e680586755') && (
                                 <>
                                 <TableCell >
                                 <Button variant="contained" style={{ backgroundColor: colors.green, color: colors.primaryBlack }} sx={{ mr: 1 }} onClick={() => handleEdit(cuadrilla)}>
@@ -55,4 +55,3 @@ const CuadrillasTable = ({ cuadrillas, handleEdit, handleDelete }) => {
 };
 
 export default CuadrillasTable;
-

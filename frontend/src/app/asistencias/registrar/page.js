@@ -48,10 +48,10 @@ const AsistenciaForm = () => {
   const isAdmin = user && user.roles && user.roles.includes('64b9468015f4e5e680586755');
 
   useEffect(() => {
-    if (!token) {
+    if (!token && typeof window !== 'undefined') {
       // Si no hay token, redirigir al usuario a la página de inicio de sesión
       window.location.href = '/signin';
-    } else if (!isAdmin) {
+    } else if (typeof window !== 'undefined' && (!token || !isAdmin)) {
       // Si el usuario no es un administrador, redirigirlo a la página de asistencias
       window.location.href = '/asistencias';
     }

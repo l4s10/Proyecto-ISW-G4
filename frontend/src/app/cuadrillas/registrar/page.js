@@ -28,12 +28,12 @@ const CuadrillaForm = () => {
 
   useEffect(() => {
     // Si no hay token, redirigir al usuario a la página de inicio de sesión
-    if (!token || !isAdmin) {
+    if (typeof window !== 'undefined' && (!token || !isAdmin)) {
       window.location.href = '/cuadrillas';
     }
   }, [token, isAdmin]);
 
-  if (!token || !isAdmin) {
+  if (typeof window !== 'undefined' && (!token || !isAdmin)) {
     // Si no hay token o el usuario no es un administrador, redirigirlo a la página de reportes
     // Puedes retornar un componente de carga o un mensaje mientras ocurre la redirección
     return (

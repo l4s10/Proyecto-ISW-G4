@@ -17,12 +17,12 @@ export default function BrigadaAsistencias() {
 
     useEffect(() => {
         // Si no hay token, redirigir al usuario a la página de inicio de sesión
-        if (!token) {
+        if (!token && typeof window !== 'undefined') {
             window.location.href = '/signin';
         }
     }, [token]);
 
-    if (!token || !isAdmin) {
+    if (typeof window !== 'undefined' && (!token || !isAdmin)) {
         // Si no hay token o el usuario no es un administrador, redirigirlo a la página de asistencias
         window.location.href = '/asistencias';
         // Puedes retornar un componente de carga o un mensaje mientras ocurre la redirección

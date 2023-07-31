@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useState, useEffect } from 'react';
 import api from '@/api/rootAPI';
 import Typography from "@mui/material/Typography";
@@ -18,10 +17,13 @@ import useAuth from "@/hooks/useAuth";
 const ReportesPage = () => {
   const { token, user } = useAuth();
   const [reportes, setReportes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchReportes = async () => {
       try {
+        setIsLoading(true);
         let res;
         //Para rol administrador (por id)
         if(user.roles.includes('64b9468015f4e5e680586755')) {
@@ -29,18 +31,30 @@ const ReportesPage = () => {
         } else {
           res = await api.get(`/reportes/usuario/${user._id}`);
         }
-        if (res.data && res.data.success && Array.isArray(res.data.reportes)) {
-          setReportes(res.data.reportes);
+        const { success, reportes } = res.data;
+        if (success && Array.isArray(reportes)) {
+          setReportes(reportes);
           console.log(reportes);
         } else {
-          console.error('Error fetching reportes: response data does not contain an array of reportes');
+          throw new Error('Error fetching reportes: response data does not contain an array of reportes');
         }
       } catch (error) {
         console.error('Error fetching reportes:', error);
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchReportes();
   }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;  // You can replace this with a loading spinner or similar if you like
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <>

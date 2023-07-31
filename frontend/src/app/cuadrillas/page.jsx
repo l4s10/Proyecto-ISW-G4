@@ -26,7 +26,7 @@ export default function Page() {
   const fetchCuadrillas = async () => {
     let res;
     try {
-      if(auth.user.roles.includes('64b9468015f4e5e680586755')) {
+      if(auth.user && auth.user.roles.includes('64b9468015f4e5e680586755')) {
           res = await api.get('/squad');
       } else {
           res = await api.get(`/squad/user-squads/${auth.user._id}`);
@@ -105,7 +105,7 @@ export default function Page() {
         <Typography variant="h2" style={{ marginTop: '20px', textAlign: 'center' }}>Modulo de Cuadrillas</Typography>
         <br />
         {/* Comprueba si el usuario tiene rol de administrador */}
-        {auth.user.roles.includes('64b9468015f4e5e680586755') && (
+        {auth.user && auth.user.roles.includes('64b9468015f4e5e680586755') && (
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={6} sm={6}>
               <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
