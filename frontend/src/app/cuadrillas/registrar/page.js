@@ -8,7 +8,7 @@ import api from '@/api/rootAPI';
 import Link from 'next/link';
 import Box from '@mui/system/Box';
 import styled from 'styled-components';
-import { colors } from '../../../utils/colors';
+import { colors } from "@/utils/colors";
 
 const FormContainer = styled(Box)`
   display: flex;

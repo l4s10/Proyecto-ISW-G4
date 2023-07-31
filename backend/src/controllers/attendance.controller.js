@@ -121,8 +121,8 @@ const obtenerAsistenciasPorUsuario = async (req, res) => {
     try {
         const { userId } = req.params;
         // Buscar las asistencias del usuario
-        const asistencias = await Attendance.find({ brigadista: userId });
-        res.json(asistencias);
+        const attendances = await Attendance.find({ brigadista: userId });
+        res.status(200).json({ success: true, attendances });
     } catch (error) {
         res.status(500).json({ mensaje: "Error al obtener las asistencias del usuario" });
     }

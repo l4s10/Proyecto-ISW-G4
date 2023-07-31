@@ -11,7 +11,8 @@ import Box from '@mui/system/Box';
 import Modal from '@mui/material/Modal';
 import styled from 'styled-components';
 import api from '@/api/rootAPI';
-import { colors } from '../utils/colors';
+import { colors } from '@/utils/colors';
+import Swal from 'sweetalert2'
 
     const FormContainer = styled(Box)`
     display: flex;
@@ -101,13 +102,21 @@ useEffect(() => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-        await api.put(`/squad/${cuadrilla._id}`, formData);
-        alert('Cuadrilla actualizada exitosamente.');
-        onUpdate(); // Llama a onUpdate cuando la cuadrilla se actualiza exitosamente
-        onClose();
+            await api.put(`/squad/${cuadrilla._id}`, formData);
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: 'Cuadrilla actualizada exitosamente.',
+            });
+            onUpdate(); // Llama a onUpdate cuando la cuadrilla se actualiza exitosamente
+            onClose();
         } catch (error) {
-        alert('Error al guardar la cuadrilla.');
-        console.error(error);
+            Swal.fire({
+                icon: 'error',
+                title: '¡Oops!',
+                text: 'Error al guardar la cuadrilla.',
+            });
+            console.error(error);
         }
     };
 

@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import Navbar from "@/components/Navbar";
 import TablaReportes from "@/components/TablaReportes";
 import Link from 'next/link';
-import { colors } from '../../utils/colors';
+import { colors } from "@/utils/colors";
 
 
 const ReportesPage = () => {
@@ -51,7 +51,7 @@ const ReportesPage = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
               <CardHeader style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} title="Ver Reportes" />
               <CardContent>
@@ -63,7 +63,7 @@ const ReportesPage = () => {
                 </Button>
               </CardContent>
             </Card>
-          </Grid>
+          </Grid> */}
         </Grid>
         <div style={{ marginTop: '40px', padding: '20px', backgroundColor: colors.primaryBlack, color: colors.white }}>
           <Typography variant="h5" align="center" style={{ marginBottom: '20px' }}>Lista de Reportes</Typography>

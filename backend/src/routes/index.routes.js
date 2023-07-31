@@ -7,7 +7,7 @@ const userRoutes = require("./user.routes.js");
 // Importa el enrutador de autenticación
 const authRoutes = require("./auth.routes.js");
 // Importa el middleware de autenticación
-// const authMiddleware = require("../middlewares/authe.middleware.js");
+const authMiddleware = require("../middlewares/authe.middleware.js");
 // Importa el middleware de autentificacion de roles
 // const modifiedMiddleware = require("../middlewares/autho.middleware.js");
 // Importamos asistencias (JORGE)
@@ -23,7 +23,7 @@ const remunerationRoutes = require("./remuneration.routes.js"); // Añade esta l
 const router = express.Router();
 
 // Define las rutas para los usuarios /api/usuarios authMiddleware.verifyToken,
-router.use("/users", userRoutes);
+router.use("/users", authMiddleware.verifyToken, userRoutes);
 // Define las rutas para la autenticación /api/auth
 router.use("/auth", authRoutes);
 // Definimos las rutas de asistencia (solo entra admin y reloj_control)

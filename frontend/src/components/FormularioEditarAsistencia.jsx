@@ -14,7 +14,9 @@ import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import Box from '@mui/system/Box';
 import Modal from '@mui/material/Modal';
 import styled from 'styled-components';
-import { colors } from '../utils/colors';
+import { colors } from '@/utils/colors';
+import Swal from 'sweetalert2';  // Importa SweetAlert2
+
 
     const StyledFlatpickr = styled(Flatpickr)`
         width: 100%;
@@ -94,15 +96,29 @@ import { colors } from '../utils/colors';
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-        await api.put(`/asistencias/${asistencia._id}`, formData);
-        alert('Asistencia actualizada exitosamente.');
-        onUpdate();  // Llama a onUpdate cuando la asistencia se actualiza exitosamente
-        handleClose();
-        } catch (error) {
-        alert('Error al actualizar la asistencia.');
-        console.error(error);
-        }
-    };
+            await api.put(`/asistencias/${asistencia._id}`, formData);
+            
+            // Utiliza SweetAlert2 para mostrar la confirmación
+            Swal.fire(
+                'Actualizado!',
+                'La asistencia se actualizó exitosamente.',
+                'success'
+            );
+            
+            onUpdate();  // Llama a onUpdate cuando la asistencia se actualiza exitosamente
+            handleClose();
+            } catch (error) {
+            
+            // Utiliza SweetAlert2 para mostrar el error
+            Swal.fire(
+                'Error!',
+                'Ocurrió un error al actualizar la asistencia.',
+                'error'
+            );
+            
+            console.error(error);
+            }
+        };
 
     return (
         <Modal open={open} onClose={handleClose}>

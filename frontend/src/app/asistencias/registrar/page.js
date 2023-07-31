@@ -14,7 +14,8 @@ import Flatpickr from 'react-flatpickr';
 import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import Box from '@mui/system/Box';
 import styled from 'styled-components';
-import { colors } from '../../../utils/colors';
+import { colors } from "@/utils/colors";
+import useAuth from "@/hooks/useAuth";
 
 const FormContainer = styled(Box)`
   display: flex;
@@ -43,6 +44,18 @@ const AsistenciaForm = () => {
   });
 
   const [users, setUsers] = useState([]);
+  const { token, user } = useAuth();
+  const isAdmin = user && user.roles && user.roles.includes('64b9468015f4e5e680586755');
+
+  useEffect(() => {
+    if (!token) {
+      // Si no hay token, redirigir al usuario a la página de inicio de sesión
+      window.location.href = '/signin';
+    } else if (!isAdmin) {
+      // Si el usuario no es un administrador, redirigirlo a la página de asistencias
+      window.location.href = '/asistencias';
+    }
+  }, [token, isAdmin]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -90,6 +103,15 @@ const AsistenciaForm = () => {
       console.error(error);
     }
   };
+
+  // Si el usuario no es un administrador, no renderizamos el formulario
+  if (!isAdmin) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Typography>No tienes permiso para acceder a esta página.</Typography>
+      </div>
+    );
+  }
 
   return (
     <Box

@@ -17,7 +17,9 @@ function TablaReportes({ initialReportes }) {
     try {
       const res = await api.get('/reportes');
       if (res.data && res.data.success && Array.isArray(res.data.reportes)) {
-        setReportes(res.data.reportes);
+        // Ordenamos los reportes por fecha de forma descendente antes de actualizar el estado
+        const reportesOrdenados = res.data.reportes.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+        setReportes(reportesOrdenados);
       } else {
         console.error('Error fetching reportes: response data does not contain an array of reportes');
       }
