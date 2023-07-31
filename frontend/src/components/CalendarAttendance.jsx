@@ -78,7 +78,7 @@ import { colors } from '../utils/colors';
                 <>
                 <h2>Detalles de la asistencia</h2>
                 <br></br>
-                <p>Usuario: {selectedEvent.brigadista.name}</p>
+                <p>Perfil: {selectedEvent.brigadista.name}</p>
                 <br></br>
                 <p>Fecha: {new Date(selectedEvent.date).toLocaleString()}</p>
                 <br></br>
