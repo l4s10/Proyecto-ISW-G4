@@ -10,6 +10,7 @@ import Box from '@mui/system/Box';
 import styled from 'styled-components';
 import { colors } from "@/utils/colors";
 import useAuth from "@/hooks/useAuth";
+import Swal from 'sweetalert2';
 
 const FormContainer = styled(Box)`
   display: flex;
@@ -93,9 +94,9 @@ const CuadrillaForm = () => {
     event.preventDefault();
     try {
       await api.post('/squad', formData);
-      alert('Cuadrilla registrada exitosamente.');
+      Swal.fire('¡Éxito!', 'Cuadrilla registrada exitosamente.', 'success');
     } catch (error) {
-      alert('Error al registrar la cuadrilla.');
+      Swal.fire('¡Error!', 'Error al registrar la cuadrilla.', 'error');
       console.error(error);
     }
   };
