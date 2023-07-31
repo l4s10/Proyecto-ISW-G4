@@ -14,21 +14,36 @@ import { Button } from "@mui/material";
 import Swal from 'sweetalert2';
 import FormularioEditarCuadrilla from '@/components/FormularioEditarCuadrilla';
 import CuadrillasTable from '@/components/CuadrillasTable'; // Importación del componente CuadrillasTable
+import useAuth from "@/hooks/useAuth";
 
 export default function Page() {
+  const auth = useAuth();
   const [cuadrillas, setCuadrillas] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCuadrilla, setSelectedCuadrilla] = useState(null);
 
   const fetchCuadrillas = async () => {
+    let res;
     try {
-      const res = await api.get('/squad');
+      if(auth.user.roles.includes('64b9468015f4e5e680586755')) {
+          res = await api.get('/squad');
+      } else {
+          res = await api.get(`/squad/user-squads/${auth.user._id}`);
+      }
       console.log(res.data.squads);
       return res.data.squads;
     } catch (error) {
       console.error('Error al obtener las cuadrillas:', error);
     }
   };
+
+  useEffect(() => {
+    if(auth.token) {
+      fetchCuadrillas().then(res => setCuadrillas(res));
+      setLoading(false);
+    }
+  }, [auth.token]);
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -89,24 +104,27 @@ export default function Page() {
       <div style={{ backgroundColor: colors.primaryBlack, color: colors.white, padding: '20px 0' }}>
         <Typography variant="h2" style={{ marginTop: '20px', textAlign: 'center' }}>Modulo de Cuadrillas</Typography>
         <br />
-        <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={6} sm={6}>
-            <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
-              <CardHeader style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} title="Registrar Cuadrilla" />
-              <CardContent style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
-                <Typography  variant="body1">
-                  Aquí puedes registrar una nueva cuadrilla.
-                </Typography>
-                <br />
-                <Button variant="contained" style={{ backgroundColor: colors.yellow, color: colors.primaryBlack }}>
-                  <Link href='/cuadrillas/registrar'>
-                    Registrar Nueva Cuadrilla
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
+        {/* Comprueba si el usuario tiene rol de administrador */}
+        {auth.user.roles.includes('64b9468015f4e5e680586755') && (
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={6} sm={6}>
+              <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
+                <CardHeader style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} title="Registrar Cuadrilla" />
+                <CardContent style={{ backgroundColor: colors.secondaryBlack, color: colors.white }}>
+                  <Typography  variant="body1">
+                    Aquí puedes registrar una nueva cuadrilla.
+                  </Typography>
+                  <br />
+                  <Button variant="contained" style={{ backgroundColor: colors.yellow, color: colors.primaryBlack }}>
+                    <Link href='/cuadrillas/registrar'>
+                      Registrar Nueva Cuadrilla
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
         <br />
         <Typography variant="h5" align="center" style={{ marginBottom: '20px' }}>Lista de Cuadrillas</Typography>
 

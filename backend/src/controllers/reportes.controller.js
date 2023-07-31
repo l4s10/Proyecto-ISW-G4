@@ -99,3 +99,28 @@ exports.eliminarReporte = async (req, res) => {
     res.status(500).json({ mensaje: "Error al eliminar el reporte" });
   }
 };
+
+/**
+ * Obtener todos los reportes asociados a un usuario por su ID
+ * @param {object} req - Objeto de solicitud
+ * @param {object} res - Objeto de respuesta
+ * @returns {Promise<void>}
+ */
+exports.obtenerReportesPorUsuario = async (req, res) => {
+  try {
+    const { usuarioId } = req.params;
+    const reportes = await Reportes.find({ usuario: usuarioId })
+      .populate("usuario", "name")
+      .exec();
+
+    // Verificar si se encontraron reportes para el usuario
+    if (reportes.length === 0) {
+      return res.status(404).json({ mensaje: "No se encontraron reportes para el usuario" });
+    }
+
+    // Enviamos los reportes al cliente
+    res.status(200).json({ success: true, reportes });
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al obtener los reportes del usuario" });
+  }
+};

@@ -9,5 +9,6 @@ router.post("/", squadController.createSquad);
 router.get("/:id", squadController.getSquadById);
 router.put("/:id", squadController.updateSquad);
 router.delete("/:id", squadController.deleteSquad);
+router.get("/user-squads/:userId", squadController.getUserSquads);
 
 module.exports = router;

@@ -3,23 +3,33 @@
 import { Button, TableCell, TableContainer, TableRow, Table, TableBody, TableHead, Paper } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import React, { useState, useEffect } from 'react';
-import api from '@/api/rootAPI';  // Asegúrate de importar tu módulo de API aquí
-import Swal from 'sweetalert2';  // Importa SweetAlert2
+import api from '@/api/rootAPI';
+import Swal from 'sweetalert2';
 import { colors } from '../utils/colors';
 import FormularioEditarReportes from './FormularioEditarReportes';
+import useAuth from "@/hooks/useAuth";
 
 function TablaReportes({ initialReportes }) {
+  const { user } = useAuth();
   const [reportes, setReportes] = useState(initialReportes);
-  const [selectedReporte, setSelectedReporte] = useState(null); // Nuevo estado
+  const [selectedReporte, setSelectedReporte] = useState(null);
   const theme = useTheme();
 
   const fetchReportes = async () => {
     try {
-      const res = await api.get('/reportes');
+      let res;
+      const isAdmin = user.roles.includes('64b9468015f4e5e680586755'); // Verificamos si el usuario es admin
+  
+      if (isAdmin) {
+        // Si es admin, llamamos a la ruta para obtener todos los reportes
+        res = await api.get('/reportes');
+      } else {
+        // Si no es admin, llamamos a la ruta para obtener los reportes por ID de usuario
+        res = await api.get(`/reportes/usuario/${user._id}`);
+      }
+  
       if (res.data && res.data.success && Array.isArray(res.data.reportes)) {
-        // Ordenamos los reportes por fecha de forma descendente antes de actualizar el estado
-        const reportesOrdenados = res.data.reportes.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
-        setReportes(reportesOrdenados);
+        setReportes(res.data.reportes.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)));
       } else {
         console.error('Error fetching reportes: response data does not contain an array of reportes');
       }
@@ -29,7 +39,6 @@ function TablaReportes({ initialReportes }) {
   };
 
   const handleEdit = (id) => {
-    // Aquí puedes manejar la lógica para editar el reporte
     const reporte = reportes.find((r) => r._id === id);
     setSelectedReporte(reporte);
     console.log(`Editar reporte con id ${id}`);
@@ -86,7 +95,9 @@ function TablaReportes({ initialReportes }) {
             <TableCell style={{ color: colors.white }}>Usuario</TableCell>
             <TableCell style={{ color: colors.white }}>Fecha</TableCell>
             <TableCell style={{ color: colors.white }}>Descripcion</TableCell>
-            <TableCell style={{ color: colors.white }}>Acciones</TableCell>
+            {user.roles.includes('64b9468015f4e5e680586755') && (
+              <TableCell style={{ color: colors.white }}>Acciones</TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -100,34 +111,35 @@ function TablaReportes({ initialReportes }) {
                 }
               </TableCell>
               <TableCell style={{ color: colors.white }}>{reporte.descripcion}</TableCell>
-              <TableCell>
-                <Button 
-                  variant="contained"  
-                  style={{backgroundColor: colors.green, color: colors.primaryBlack ,marginRight: theme.spacing(1)}}
-                  onClick={() => handleEdit(reporte._id)}
-                >
-                  Editar
-                </Button>
-                <Button 
-                  variant="contained" 
-                  style={{backgroundColor: colors.orange, color: colors.primaryBlack}}
-                  onClick={() => handleDelete(reporte._id)}
-                >
-                  Eliminar
-                </Button>
-              </TableCell>
+              {user.roles.includes('64b9468015f4e5e680586755') && (
+                <TableCell>
+                  <Button 
+                    variant="contained"  
+                    style={{backgroundColor: colors.green, color: colors.primaryBlack ,marginRight: theme.spacing(1)}}
+                    onClick={() => handleEdit(reporte._id)}
+                  >
+                    Editar
+                  </Button>
+                  <Button 
+                    variant="contained" 
+                    style={{backgroundColor: colors.orange, color: colors.primaryBlack}}
+                    onClick={() => handleDelete(reporte._id)}
+                  >
+                    Eliminar
+                  </Button>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <FormularioEditarReportes
-      reporte={selectedReporte}
-      isOpen={!!selectedReporte}
-      onClose={() => setSelectedReporte(null)}
-      onUpdate={() => fetchReportes()}
-    />
+        reporte={selectedReporte}
+        isOpen={!!selectedReporte}
+        onClose={() => setSelectedReporte(null)}
+        onUpdate={() => fetchReportes()}
+      />
     </TableContainer>
-    
   );
 }
 

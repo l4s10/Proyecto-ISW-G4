@@ -112,10 +112,37 @@ async function deleteSquad(req, res, next) {
   }
 }
 
+/**
+ * Obtener todas las cuadrillas en las que un usuario es parte.
+ * @param {Request} req - Objeto de solicitud.
+ * @param {Response} res - Objeto de respuesta.
+ * @param {NextFunction} next - Función para pasar al siguiente middleware.
+ */
+async function getUserSquads(req, res, next) {
+  try {
+    const { userId } = req.params;
+    const squads = await Squad.find({
+      $or: [{ squadLeader: userId }, { brigadistas: userId }]
+    })
+      .populate("squadLeader", "name")
+      .populate("brigadistas", "name")
+      .exec();
+    if (!squads) {
+      return res.status(404).json({ error: "Cuadrillas no encontradas para el usuario dado." });
+    }
+    res.status(200).json({ success: true, squads });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error interno del servidor." });
+  }
+}
+
+
 module.exports = {
   getAllSquads,
   createSquad,
   getSquadById,
   updateSquad,
   deleteSquad,
+  getUserSquads,
 };

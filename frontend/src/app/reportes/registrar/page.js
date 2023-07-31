@@ -16,6 +16,7 @@ import Flatpickr from 'react-flatpickr';
 import { Spanish } from 'flatpickr/dist/l10n/es.js';
 import Box from '@mui/system/Box';
 import styled from 'styled-components';
+import useAuth from "@/hooks/useAuth";
 
 import { colors } from "@/utils/colors";
 
@@ -39,6 +40,25 @@ const StyledFlatpickr = styled(Flatpickr)`
 `;
 
 const ReporteForm = () => {
+  const { token, user } = useAuth();
+  const isAdmin = user && user.roles && user.roles.includes('64b9468015f4e5e680586755');
+
+  useEffect(() => {
+    // Si no hay token, redirigir al usuario a la página de inicio de sesión
+    if (!token || !isAdmin) {
+      window.location.href = '/reportes';
+    }
+  }, [token, isAdmin]);
+
+  if (!token || !isAdmin) {
+    // Si no hay token o el usuario no es un administrador, redirigirlo a la página de reportes
+    // Puedes retornar un componente de carga o un mensaje mientras ocurre la redirección
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Typography>Cargando...</Typography>
+      </div>
+    );
+  }
   const [formData, setFormData] = useState({
     titulo: '',
     usuario: '',

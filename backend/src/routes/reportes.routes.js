@@ -17,4 +17,7 @@ router.put("/:id", reportesController.actualizarReporte);
 // Ruta para eliminar un reporte por su ID
 router.delete("/:id", reportesController.eliminarReporte);
 
+// Obtener todos los reportes asociados a un usuario por su ID
+router.get("/usuario/:usuarioId", reportesController.obtenerReportesPorUsuario);
+
 module.exports = router;
