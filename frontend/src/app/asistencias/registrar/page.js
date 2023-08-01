@@ -16,6 +16,7 @@ import Box from '@mui/system/Box';
 import styled from 'styled-components';
 import { colors } from "@/utils/colors";
 import useAuth from "@/hooks/useAuth";
+import Swal from 'sweetalert2';
 
 const FormContainer = styled(Box)`
   display: flex;
@@ -97,9 +98,17 @@ const AsistenciaForm = () => {
     event.preventDefault();
     try {
       await api.post('/asistencias', formData);
-      alert('Asistencia registrada exitosamente.');
+      Swal.fire({
+        icon: 'success',
+        title: '¡Buen trabajo!',
+        text: 'Asistencia registrada exitosamente.',
+      });
     } catch (error) {
-      alert('Error al registrar la asistencia.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Error al registrar el reporte.',
+      });
       console.error(error);
     }
   };
