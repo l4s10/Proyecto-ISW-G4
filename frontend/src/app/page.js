@@ -15,7 +15,11 @@ export default function Home() {
   return (
     <PrivateRoute>
       <Navbar/>
-      <div style={{ backgroundColor: colors.primaryBlack, color: colors.white, padding: '20px 0' }}>
+      <div style={{ backgroundColor: colors.primaryBlack,
+            color: colors.white,
+            padding: '20px 0',
+            minHeight: '100vh'
+        }}>
         <Typography variant="h2" align="center" style={{ marginBottom: '20px' }}>Brigadistas Unidos</Typography>
         <Card style={{ backgroundColor: colors.secondaryBlack, color: colors.white, margin: '0 20px' }}>
           <CardHeader style={{ backgroundColor: colors.secondaryBlack, color: colors.white }} title="Bienvenido a Brigadistas Unidos" />
