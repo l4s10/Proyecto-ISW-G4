@@ -58,7 +58,7 @@ export default function Page() {
 
     if (result.isConfirmed) {
       try {
-        const res = await api.delete('/squad/${id}');
+        const res = await api.delete(`/squad/${id}`);
         if (res.status === 200) {
           Swal.fire(
             'Borrado!',
